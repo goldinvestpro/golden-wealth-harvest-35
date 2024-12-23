@@ -8,7 +8,7 @@ const Blog = () => {
       title: "Why Invest in Gold? A Guide for Beginners",
       date: "March 15, 2024",
       excerpt: "Gold has been a cornerstone of wealth preservation for centuries, prized not only for its beauty but also for its unique ability to maintain value over time...",
-      imageUrl: "/placeholder.svg",
+      imageUrl: "/lovable-uploads/7e2790ff-1e0f-4dd6-9880-7a22be7bb381.png",
       readTime: "5 min read",
     },
     {
@@ -16,7 +16,7 @@ const Blog = () => {
       title: "Gold IRA vs. Traditional IRA: Which Is Right for You?",
       date: "March 10, 2024",
       excerpt: "When planning for retirement, choosing the right investment vehicle is crucial. Traditional IRAs are well-known options, but Gold IRAs are gaining popularity...",
-      imageUrl: "/placeholder.svg",
+      imageUrl: "/lovable-uploads/8cea0754-5101-4f52-b47b-eb63b647a036.png",
       readTime: "4 min read",
     },
     {
@@ -24,7 +24,7 @@ const Blog = () => {
       title: "The Future of Gold Investment in 2024",
       date: "March 5, 2024",
       excerpt: "As we navigate through 2024, the gold market continues to evolve with new technologies and investment opportunities emerging...",
-      imageUrl: "/placeholder.svg",
+      imageUrl: "/lovable-uploads/afbac699-1c61-46ae-aa14-cdad00f12e75.png",
       readTime: "6 min read",
     }
   ];
