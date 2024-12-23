@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, CardContent } from './ui/card';
 
-const BlogPost = () => {
+export const BlogPost = () => {
   return (
     <div className="container mx-auto px-4 py-12">
       <Card className="bg-white shadow-lg">
@@ -85,5 +85,3 @@ const BlogPost = () => {
     </div>
   );
 };
-
-export default BlogPost;
