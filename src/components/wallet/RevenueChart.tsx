@@ -16,14 +16,27 @@ const data = [
   { month: "Dec", revenue: 240000, expenses: 115000 },
 ];
 
-export function RevenueChart() {
+const demoData = data.map(item => ({
+  ...item,
+  revenue: item.revenue * 0.1,
+  expenses: item.expenses * 0.1
+}));
+
+interface RevenueChartProps {
+  isDemoAccount?: boolean;
+}
+
+export function RevenueChart({ isDemoAccount = false }: RevenueChartProps) {
+  const chartData = isDemoAccount ? demoData : data;
+  const totalRevenue = isDemoAccount ? "24.0K" : "240.8K";
+
   return (
     <Card className="bg-navy-500 border-white/10">
       <CardContent className="p-6">
         <div className="flex justify-between items-center mb-8">
           <div>
             <p className="text-sm text-gray-400">Total revenue</p>
-            <h2 className="text-3xl font-bold">$240.8K</h2>
+            <h2 className="text-3xl font-bold">${totalRevenue}</h2>
           </div>
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-2">
@@ -38,7 +51,7 @@ export function RevenueChart() {
         </div>
         <div className="h-[300px]">
           <ResponsiveContainer width="100%" height="100%">
-            <AreaChart data={data}>
+            <AreaChart data={chartData}>
               <defs>
                 <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="5%" stopColor="#3B82F6" stopOpacity={0.3}/>
