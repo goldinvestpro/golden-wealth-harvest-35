@@ -1,4 +1,4 @@
-import { Calculator, Users, Award, Shield } from "lucide-react";
+import { Calculator, Users, Award, Shield, Lock, TrendingUp } from "lucide-react";
 
 export const AboutSection = () => {
   const features = [
@@ -28,6 +28,24 @@ export const AboutSection = () => {
     },
   ];
 
+  const benefits = [
+    {
+      icon: Shield,
+      title: "Secure Asset",
+      description: "Physical gold offers unmatched security and stability in times of economic uncertainty.",
+    },
+    {
+      icon: Lock,
+      title: "True Ownership",
+      description: "Secure your future with gold your trusted destination for safe and lucrative opportunities.",
+    },
+    {
+      icon: TrendingUp,
+      title: "Value Preservation",
+      description: "Throughout history, gold has maintained its value against currency devaluation.",
+    },
+  ];
+
   return (
     <div className="bg-navy-500 py-20">
       <div className="container mx-auto px-4">
@@ -40,6 +58,29 @@ export const AboutSection = () => {
             precious metals into their diversified portfolios. We are dedicated to making gold investment accessible, 
             secure, and profitable for everyone.
           </p>
+        </div>
+
+        <div className="mb-20">
+          <h2 className="text-4xl font-bold text-center text-gold-300 mb-6">
+            Gold's Tangible Benefits
+          </h2>
+          <p className="text-gray-300 text-center max-w-4xl mx-auto mb-16 text-xl">
+            Gold's tangible nature allows you to preserve assets independently, free from bank control
+          </p>
+          <div className="grid md:grid-cols-3 gap-8">
+            {benefits.map((benefit) => (
+              <div
+                key={benefit.title}
+                className="p-6 rounded-lg border border-gold-300/20 bg-navy-400/20 hover:bg-navy-400/40 transition-colors text-center"
+              >
+                <benefit.icon className="w-12 h-12 text-gold-300 mb-4 mx-auto" />
+                <h3 className="text-2xl font-semibold text-gold-300 mb-3">
+                  {benefit.title}
+                </h3>
+                <p className="text-gray-300 text-lg">{benefit.description}</p>
+              </div>
+            ))}
+          </div>
         </div>
 
         <h2 className="text-4xl font-bold text-center text-gold-300 mb-6">
