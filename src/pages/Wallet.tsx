@@ -6,6 +6,8 @@ import { TransactionHistory } from "@/components/wallet/TransactionHistory";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
+import { ChevronLeft } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export default function Wallet() {
   const [isDemoAccount, setIsDemoAccount] = useState(false);
@@ -31,8 +33,10 @@ export default function Wallet() {
     <div className="min-h-screen bg-navy-500 text-white p-4 sm:p-8">
       <div className="max-w-[1400px] mx-auto">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
-          <div className="flex flex-col sm:flex-row sm:items-center gap-4">
-            <h1 className="text-xl sm:text-2xl font-semibold">Welcome back, John</h1>
+          <div className="flex items-center gap-4">
+            <Link to="/" className="hover:text-gold-300 transition-colors">
+              <ChevronLeft className="h-6 w-6" />
+            </Link>
             <div className="flex items-center gap-2">
               <Switch
                 id="account-mode"
