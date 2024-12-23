@@ -1,21 +1,16 @@
-import { HeroSection } from "@/components/HeroSection";
-import { InvestmentPlans } from "@/components/InvestmentPlans";
-import { GoldPriceDisplay } from "@/components/GoldPriceDisplay";
-import { AboutSection } from "@/components/AboutSection";
-import { Footer } from "@/components/Footer";
-import { Navigation } from "@/components/Navigation";
+import React from 'react';
+import HeroSection from '@/components/HeroSection';
+import AboutSection from '@/components/AboutSection';
+import InvestmentPlans from '@/components/InvestmentPlans';
+import BlogPost from '@/components/BlogPost';
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Navigation />
+    <div className="min-h-screen">
       <HeroSection />
-      <div className="container mx-auto px-4 -mt-10 mb-10">
-        <GoldPriceDisplay />
-      </div>
       <AboutSection />
       <InvestmentPlans />
-      <Footer />
+      <BlogPost />
     </div>
   );
 };
