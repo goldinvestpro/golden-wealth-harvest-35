@@ -15,7 +15,7 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 
-const transactions = [
+const realTransactions = [
   {
     id: 1,
     date: "2024-03-20",
@@ -53,7 +53,37 @@ const transactions = [
   },
 ];
 
-export function TransactionHistory() {
+const demoTransactions = [
+  {
+    id: 1,
+    date: "2024-03-20",
+    description: "Demo Subscription",
+    amount: 9.99,
+    status: "completed",
+  },
+  {
+    id: 2,
+    date: "2024-03-19",
+    description: "Demo Plan Upgrade",
+    amount: 19.99,
+    status: "completed",
+  },
+  {
+    id: 3,
+    date: "2024-03-18",
+    description: "Demo Refund",
+    amount: -4.99,
+    status: "refunded",
+  },
+];
+
+interface TransactionHistoryProps {
+  isDemoAccount?: boolean;
+}
+
+export function TransactionHistory({ isDemoAccount = false }: TransactionHistoryProps) {
+  const transactions = isDemoAccount ? demoTransactions : realTransactions;
+
   return (
     <div className="rounded-lg border bg-navy-500 border-white/10">
       <div className="p-6">

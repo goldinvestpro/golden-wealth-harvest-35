@@ -3,13 +3,47 @@ import { StatCard } from "@/components/wallet/StatCard";
 import { RevenueChart } from "@/components/wallet/RevenueChart";
 import { SessionsChart } from "@/components/wallet/SessionsChart";
 import { TransactionHistory } from "@/components/wallet/TransactionHistory";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
+import { useState } from "react";
 
 export default function Wallet() {
+  const [isDemoAccount, setIsDemoAccount] = useState(false);
+
+  const stats = {
+    demo: {
+      pageviews: "2.1K",
+      pageviewsChange: 12.3,
+      subscriptions: "156",
+      subscriptionsChange: 8.1,
+    },
+    real: {
+      pageviews: "50.8K",
+      pageviewsChange: 28.4,
+      subscriptions: "2.3K",
+      subscriptionsChange: 9.2,
+    }
+  };
+
+  const currentStats = isDemoAccount ? stats.demo : stats.real;
+
   return (
     <div className="min-h-screen bg-navy-500 text-white p-8">
       <div className="max-w-[1400px] mx-auto">
         <div className="flex items-center justify-between mb-8">
-          <h1 className="text-2xl font-semibold">Welcome back, John</h1>
+          <div className="flex items-center gap-8">
+            <h1 className="text-2xl font-semibold">Welcome back, John</h1>
+            <div className="flex items-center gap-2">
+              <Switch
+                id="account-mode"
+                checked={isDemoAccount}
+                onCheckedChange={setIsDemoAccount}
+              />
+              <Label htmlFor="account-mode" className="text-sm text-gray-300">
+                {isDemoAccount ? "Demo Account" : "Real Account"}
+              </Label>
+            </div>
+          </div>
           <div className="flex gap-4">
             <Button variant="outline" className="text-white border-white/20">
               Export data
@@ -23,29 +57,29 @@ export default function Wallet() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
           <StatCard
             title="Pageviews"
-            value="50.8K"
-            change={28.4}
+            value={currentStats.pageviews}
+            change={currentStats.pageviewsChange}
             isPositive={true}
           />
           <StatCard
             title="Subscriptions"
-            value="2.3K"
-            change={9.2}
+            value={currentStats.subscriptions}
+            change={currentStats.subscriptionsChange}
             isPositive={true}
           />
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
           <div className="lg:col-span-2">
-            <RevenueChart />
+            <RevenueChart isDemoAccount={isDemoAccount} />
           </div>
           <div>
-            <SessionsChart />
+            <SessionsChart isDemoAccount={isDemoAccount} />
           </div>
         </div>
 
         <div className="mt-8">
-          <TransactionHistory />
+          <TransactionHistory isDemoAccount={isDemoAccount} />
         </div>
       </div>
     </div>
