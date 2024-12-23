@@ -32,13 +32,13 @@ export function RevenueChart({ isDemoAccount = false }: RevenueChartProps) {
 
   return (
     <Card className="bg-navy-500 border-white/10">
-      <CardContent className="p-6">
-        <div className="flex justify-between items-center mb-8">
+      <CardContent className="p-4 sm:p-6">
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-8">
           <div>
             <p className="text-sm text-gray-400">Total revenue</p>
-            <h2 className="text-3xl font-bold">${totalRevenue}</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold">${totalRevenue}</h2>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex flex-wrap items-center gap-4">
             <div className="flex items-center gap-2">
               <div className="w-3 h-3 rounded-full bg-blue-500" />
               <span className="text-sm">Revenue</span>

@@ -28,11 +28,11 @@ export default function Wallet() {
   const currentStats = isDemoAccount ? stats.demo : stats.real;
 
   return (
-    <div className="min-h-screen bg-navy-500 text-white p-8">
+    <div className="min-h-screen bg-navy-500 text-white p-4 sm:p-8">
       <div className="max-w-[1400px] mx-auto">
-        <div className="flex items-center justify-between mb-8">
-          <div className="flex items-center gap-8">
-            <h1 className="text-2xl font-semibold">Welcome back, John</h1>
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+            <h1 className="text-xl sm:text-2xl font-semibold">Welcome back, John</h1>
             <div className="flex items-center gap-2">
               <Switch
                 id="account-mode"
@@ -44,7 +44,7 @@ export default function Wallet() {
               </Label>
             </div>
           </div>
-          <div className="flex gap-4">
+          <div className="flex flex-col sm:flex-row gap-2 sm:gap-4">
             <Button variant="outline" className="text-white border-white/20">
               Export data
             </Button>
@@ -54,7 +54,7 @@ export default function Wallet() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
           <StatCard
             title="Pageviews"
             value={currentStats.pageviews}
@@ -69,7 +69,7 @@ export default function Wallet() {
           />
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-8 mb-8">
           <div className="lg:col-span-2">
             <RevenueChart isDemoAccount={isDemoAccount} />
           </div>
