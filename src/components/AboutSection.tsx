@@ -31,6 +31,17 @@ export const AboutSection = () => {
   return (
     <div className="bg-navy-500 py-20">
       <div className="container mx-auto px-4">
+        <div className="mb-20">
+          <h2 className="text-4xl font-bold text-center text-gold-300 mb-6">
+            Our Mission
+          </h2>
+          <p className="text-gray-300 text-center max-w-4xl mx-auto text-lg leading-relaxed">
+            Our mission is simple: to empower individuals to build wealth and stability by incorporating gold and 
+            precious metals into their diversified portfolios. We are dedicated to making gold investment accessible, 
+            secure, and profitable for everyone.
+          </p>
+        </div>
+
         <h2 className="text-4xl font-bold text-center text-gold-300 mb-6">
           About GoldInvestPro
         </h2>
