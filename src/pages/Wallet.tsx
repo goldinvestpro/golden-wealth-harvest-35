@@ -60,7 +60,7 @@ export default function Wallet() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
           <StatCard
-            title="Pageviews"
+            title="Current Balance"
             value={currentStats.pageviews}
             change={currentStats.pageviewsChange}
             isPositive={true}
