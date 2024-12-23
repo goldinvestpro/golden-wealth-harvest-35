@@ -17,15 +17,10 @@ interface SessionsChartProps {
 
 export function SessionsChart({ isDemoAccount = false }: SessionsChartProps) {
   const chartData = isDemoAccount ? demoSessionData : sessionData;
-  const totalSessions = isDemoAccount ? "80" : "400";
 
   return (
     <Card className="bg-navy-500 border-white/10">
       <CardContent>
-        <div className="mb-4">
-          <p className="text-sm text-gray-400">Total sessions</p>
-          <h2 className="text-3xl font-bold">{totalSessions}</h2>
-        </div>
         <div className="h-[200px]">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={chartData}>
