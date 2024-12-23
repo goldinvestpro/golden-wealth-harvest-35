@@ -2,11 +2,21 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import { Button } from "@/components/ui/button";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
-import { ShoppingCart } from "lucide-react";
-import { useToast } from "@/components/ui/use-toast";
+import { ShoppingCart, Minus, Plus } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
+import { useState } from "react";
+
+interface CartItem {
+  id: number;
+  name: string;
+  price: number;
+  quantity: number;
+}
 
 const Shop = () => {
   const { toast } = useToast();
+  const [cart, setCart] = useState<CartItem[]>([]);
+  const [isCartOpen, setIsCartOpen] = useState(false);
 
   const products = [
     {
@@ -53,19 +63,97 @@ const Shop = () => {
     }
   ];
 
-  const handleAddToCart = (productName: string) => {
+  const handleAddToCart = (productId: number, productName: string, price: number) => {
+    setCart(prevCart => {
+      const existingItem = prevCart.find(item => item.id === productId);
+      if (existingItem) {
+        return prevCart.map(item =>
+          item.id === productId
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        );
+      }
+      return [...prevCart, { id: productId, name: productName, price, quantity: 1 }];
+    });
+
     toast({
       title: "Added to Cart",
       description: `${productName} has been added to your cart.`,
     });
   };
 
+  const updateQuantity = (productId: number, change: number) => {
+    setCart(prevCart => {
+      return prevCart.map(item => {
+        if (item.id === productId) {
+          const newQuantity = Math.max(0, item.quantity + change);
+          return { ...item, quantity: newQuantity };
+        }
+        return item;
+      }).filter(item => item.quantity > 0);
+    });
+  };
+
+  const cartTotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+
   return (
     <div className="min-h-screen flex flex-col">
       <Navigation />
       
       <main className="flex-grow container mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold text-navy-500 mb-8">Gold Investment Products</h1>
+        <div className="flex justify-between items-center mb-8">
+          <h1 className="text-3xl font-bold text-navy-500">Gold Investment Products</h1>
+          <Button
+            variant="outline"
+            className="relative"
+            onClick={() => setIsCartOpen(!isCartOpen)}
+          >
+            <ShoppingCart className="h-5 w-5" />
+            {cart.length > 0 && (
+              <span className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">
+                {cart.reduce((total, item) => total + item.quantity, 0)}
+              </span>
+            )}
+          </Button>
+        </div>
+
+        {isCartOpen && cart.length > 0 && (
+          <div className="mb-8 p-4 border rounded-lg shadow-lg">
+            <h2 className="text-xl font-bold mb-4">Shopping Cart</h2>
+            {cart.map((item) => (
+              <div key={item.id} className="flex items-center justify-between mb-4 p-2 border-b">
+                <div>
+                  <h3 className="font-medium">{item.name}</h3>
+                  <p className="text-sm text-gray-600">${item.price.toLocaleString()} × {item.quantity}</p>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    onClick={() => updateQuantity(item.id, -1)}
+                  >
+                    <Minus className="h-4 w-4" />
+                  </Button>
+                  <span className="w-8 text-center">{item.quantity}</span>
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    onClick={() => updateQuantity(item.id, 1)}
+                  >
+                    <Plus className="h-4 w-4" />
+                  </Button>
+                </div>
+              </div>
+            ))}
+            <div className="flex justify-between items-center mt-4 pt-4 border-t">
+              <span className="font-bold">Total:</span>
+              <span className="font-bold">${cartTotal.toLocaleString()}</span>
+            </div>
+            <Button className="w-full mt-4 bg-gold-300 hover:bg-gold-400 text-navy-500">
+              Proceed to Checkout
+            </Button>
+          </div>
+        )}
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {products.map((product) => (
@@ -89,7 +177,7 @@ const Shop = () => {
               <CardFooter className="mt-auto">
                 <Button
                   className="w-full bg-gold-300 hover:bg-gold-400 text-navy-500 transition-colors duration-300"
-                  onClick={() => handleAddToCart(product.name)}
+                  onClick={() => handleAddToCart(product.id, product.name, product.price)}
                 >
                   <ShoppingCart className="mr-2 h-4 w-4" />
                   Add to Cart
