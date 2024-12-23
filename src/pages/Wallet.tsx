@@ -16,14 +16,14 @@ export default function Wallet() {
     demo: {
       pageviews: "2.1K",
       pageviewsChange: 12.3,
-      subscriptions: "156",
-      subscriptionsChange: 8.1,
+      profits: "156",
+      profitsChange: 8.1,
     },
     real: {
       pageviews: "50.8K",
       pageviewsChange: 28.4,
-      subscriptions: "2.3K",
-      subscriptionsChange: 9.2,
+      profits: "2.3K",
+      profitsChange: 9.2,
     }
   };
 
@@ -66,9 +66,9 @@ export default function Wallet() {
             isPositive={true}
           />
           <StatCard
-            title="Subscriptions"
-            value={currentStats.subscriptions}
-            change={currentStats.subscriptionsChange}
+            title="Profits"
+            value={currentStats.profits}
+            change={currentStats.profitsChange}
             isPositive={true}
           />
         </div>
