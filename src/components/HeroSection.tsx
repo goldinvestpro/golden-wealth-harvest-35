@@ -27,6 +27,12 @@ export const HeroSection = () => {
             >
               Try Demo
             </Button>
+            <Button
+              className="bg-gold-400 text-navy-500 hover:bg-gold-500 transition-all w-full sm:w-auto"
+              size="lg"
+            >
+              Invest
+            </Button>
           </div>
         </div>
       </div>
