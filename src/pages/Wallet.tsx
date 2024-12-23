@@ -49,7 +49,7 @@ export default function Wallet() {
             </div>
           </div>
           <div className="flex flex-col sm:flex-row gap-2 sm:gap-4">
-            <Button variant="outline" className="text-white border-white/80 font-medium hover:bg-white/10 hover:text-white">
+            <Button variant="outline" className="text-black border-white/80 font-medium hover:bg-white/10 hover:text-black">
               Deposit
             </Button>
             <Button className="bg-gold-300 hover:bg-gold-400 text-navy-500 font-medium">
