@@ -19,7 +19,7 @@ export const GoldPriceDisplay = () => {
   }, [price]);
 
   return (
-    <Card className="bg-white shadow-lg">
+    <Card className="bg-white shadow-lg mt-8">
       <CardHeader>
         <CardTitle className="text-lg text-gray-600">Current Gold Price</CardTitle>
       </CardHeader>
