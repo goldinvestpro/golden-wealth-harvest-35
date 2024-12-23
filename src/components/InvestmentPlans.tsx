@@ -80,6 +80,46 @@ export const InvestmentPlans = () => {
             </Card>
           ))}
         </div>
+
+        <div className="mt-32">
+          <h2 className="text-4xl font-bold text-center mb-16">
+            <span className="text-navy-500">Inspired</span>{" "}
+            <span className="text-gold-300">Insights</span>{" "}
+            <span className="text-navy-500">and Timeless</span>{" "}
+            <span className="text-gold-300">Wisdom</span>{" "}
+            <span className="text-navy-500">on Investment</span>
+          </h2>
+
+          <div className="grid md:grid-cols-2 gap-x-16 gap-y-20">
+            <div>
+              <h3 className="text-2xl font-bold text-gold-300 mb-4">SOLID SAFE</h3>
+              <p className="text-gray-600 text-lg">
+                Smart thinking you need to proceed forward in precious metals.
+              </p>
+            </div>
+
+            <div>
+              <h3 className="text-2xl font-bold text-gold-300 mb-4">MARKET INSIGHTS</h3>
+              <p className="text-gray-600 text-lg">
+                Practice-based tips reveal, unlocking the secrets of successful metal investing.
+              </p>
+            </div>
+
+            <div>
+              <h3 className="text-2xl font-bold text-gold-300 mb-4">PROVEN METAL</h3>
+              <p className="text-gray-600 text-lg">
+                Navigate the metals market, strategies for successful gold and silver investing.
+              </p>
+            </div>
+
+            <div>
+              <h3 className="text-2xl font-bold text-gold-300 mb-4">INVESTMENT GUIDE</h3>
+              <p className="text-gray-600 text-lg">
+                The art of precious metals: why investing in gold will help create wealth.
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
