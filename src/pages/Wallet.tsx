@@ -53,7 +53,7 @@ export default function Wallet() {
               Deposit
             </Button>
             <Button className="bg-indigo-500 hover:bg-indigo-600">
-              Create report
+              Withdraw
             </Button>
           </div>
         </div>
