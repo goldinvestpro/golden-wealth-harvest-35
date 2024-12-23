@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { StatCard } from "@/components/wallet/StatCard";
 import { RevenueChart } from "@/components/wallet/RevenueChart";
 import { SessionsChart } from "@/components/wallet/SessionsChart";
+import { TransactionHistory } from "@/components/wallet/TransactionHistory";
 
 export default function Wallet() {
   return (
@@ -34,13 +35,17 @@ export default function Wallet() {
           />
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
           <div className="lg:col-span-2">
             <RevenueChart />
           </div>
           <div>
             <SessionsChart />
           </div>
+        </div>
+
+        <div className="mt-8">
+          <TransactionHistory />
         </div>
       </div>
     </div>
