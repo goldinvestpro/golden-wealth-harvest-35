@@ -21,7 +21,7 @@ export function SessionsChart({ isDemoAccount = false }: SessionsChartProps) {
 
   return (
     <Card className="bg-navy-500 border-white/10">
-      <CardContent className="p-6">
+      <CardContent>
         <div className="mb-4">
           <p className="text-sm text-gray-400">Total sessions</p>
           <h2 className="text-3xl font-bold">{totalSessions}</h2>
