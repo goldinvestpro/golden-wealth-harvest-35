@@ -14,12 +14,20 @@ export const HeroSection = () => {
             Start your journey in gold investment with GoldInvestPro. Choose your
             preferred investment timeline and watch your wealth grow.
           </p>
-          <Button
-            className="bg-gold-300 text-navy-500 hover:bg-gold-400 transition-all w-full md:w-auto"
-            size="lg"
-          >
-            Start Investing <ArrowRight className="ml-2" />
-          </Button>
+          <div className="flex flex-col sm:flex-row gap-4">
+            <Button
+              className="bg-gold-300 text-navy-500 hover:bg-gold-400 transition-all w-full sm:w-auto"
+              size="lg"
+            >
+              Buy Now <ArrowRight className="ml-2" />
+            </Button>
+            <Button
+              className="bg-navy-400 text-gold-300 hover:bg-navy-300 border-2 border-gold-300 transition-all w-full sm:w-auto"
+              size="lg"
+            >
+              Try Demo
+            </Button>
+          </div>
         </div>
       </div>
       <div className="absolute right-0 top-0 w-1/3 h-full opacity-10 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTAwIDAgTDIwMCAxMDAgTDEwMCAyMDAgTDAgMTAwIFoiIGZpbGw9IiNGRkQ3MDAiLz48L3N2Zz4=')]" />
