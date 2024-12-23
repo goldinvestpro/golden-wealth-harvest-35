@@ -18,17 +18,38 @@ const Shop = () => {
     },
     {
       id: 2,
+      name: "1kg ABC Fine Gold Bar",
+      price: 65000.00,
+      description: "Premium 1 kilo gold bar with ABC certification, 999.9 purity.",
+      image: "/lovable-uploads/0d420486-9b11-4bec-881f-8305b4d87220.png"
+    },
+    {
+      id: 3,
+      name: "Swiss Gold Collection",
+      price: 35000.00,
+      description: "Set of premium Swiss-made gold bars, perfect for serious investors.",
+      image: "/lovable-uploads/dfd8347a-dfdf-4cb3-b722-877d9ad234d9.png"
+    },
+    {
+      id: 4,
       name: "Gold Investment Package",
       price: 5000.00,
       description: "Diversified gold investment package including physical gold and certificates.",
       image: "/lovable-uploads/8cea0754-5101-4f52-b47b-eb63b647a036.png"
     },
     {
-      id: 3,
-      name: "Gold Savings Plan",
-      price: 250.00,
-      description: "Monthly gold savings plan with flexible contributions.",
-      image: "/lovable-uploads/afbac699-1c61-46ae-aa14-cdad00f12e75.png"
+      id: 5,
+      name: "Premium Gold Bar Set",
+      price: 75000.00,
+      description: "Exclusive set of three 1kg gold bars from Continental Mint.",
+      image: "/lovable-uploads/cca1e34f-dd3b-45f7-851a-787515acd4b3.png"
+    },
+    {
+      id: 6,
+      name: "Gold & Coin Collection",
+      price: 45000.00,
+      description: "Luxury collection featuring gold bars and commemorative coins.",
+      image: "/lovable-uploads/13bcaa68-c65c-482d-8270-4e6a7c282463.png"
     }
   ];
 
@@ -48,24 +69,26 @@ const Shop = () => {
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {products.map((product) => (
-            <Card key={product.id} className="flex flex-col">
+            <Card key={product.id} className="flex flex-col hover:shadow-lg transition-shadow duration-300">
               <CardHeader>
-                <img
-                  src={product.image}
-                  alt={product.name}
-                  className="w-full h-48 object-cover rounded-t-lg"
-                />
+                <div className="relative h-48 overflow-hidden rounded-t-lg">
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
                 <CardTitle className="mt-4 text-xl text-navy-500">{product.name}</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-gray-600">{product.description}</p>
+                <p className="text-gray-600 min-h-[60px]">{product.description}</p>
                 <p className="text-xl font-bold text-navy-500 mt-4">
                   ${product.price.toLocaleString()}
                 </p>
               </CardContent>
               <CardFooter className="mt-auto">
                 <Button
-                  className="w-full bg-gold-300 hover:bg-gold-400 text-navy-500"
+                  className="w-full bg-gold-300 hover:bg-gold-400 text-navy-500 transition-colors duration-300"
                   onClick={() => handleAddToCart(product.name)}
                 >
                   <ShoppingCart className="mr-2 h-4 w-4" />
