@@ -1,7 +1,10 @@
 import { Link } from "react-router-dom";
-import { UserRound } from "lucide-react";
+import { UserRound, Menu } from "lucide-react";
+import { useState } from "react";
 
 export const Navigation = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   return (
     <nav className="bg-navy-500 text-white py-4 sticky top-0 z-50">
       <div className="container mx-auto px-4">
@@ -10,7 +13,30 @@ export const Navigation = () => {
             GoldInvestPro
           </Link>
           
-          <div className="flex items-center gap-8">
+          {/* Mobile menu button */}
+          <button 
+            className="md:hidden"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+          >
+            <Menu size={24} />
+          </button>
+
+          {/* Desktop menu */}
+          <div className="hidden md:flex items-center gap-8">
+            <Link to="/shop" className="hover:text-gold-300 transition-colors">Shop</Link>
+            <Link to="/wallet" className="hover:text-gold-300 transition-colors">Wallet</Link>
+            <Link to="/blog" className="hover:text-gold-300 transition-colors">Blog</Link>
+            <Link 
+              to="/profile" 
+              className="hover:text-gold-300 transition-colors flex items-center gap-2"
+            >
+              <UserRound size={20} />
+              <span>Profile</span>
+            </Link>
+          </div>
+
+          {/* Mobile menu */}
+          <div className={`${isMenuOpen ? 'flex' : 'hidden'} md:hidden absolute top-full left-0 right-0 bg-navy-500 flex-col items-center gap-4 py-4 border-t border-white/10`}>
             <Link to="/shop" className="hover:text-gold-300 transition-colors">Shop</Link>
             <Link to="/wallet" className="hover:text-gold-300 transition-colors">Wallet</Link>
             <Link to="/blog" className="hover:text-gold-300 transition-colors">Blog</Link>
