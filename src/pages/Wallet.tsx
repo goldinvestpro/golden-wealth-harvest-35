@@ -50,7 +50,7 @@ export default function Wallet() {
           </div>
           <div className="flex flex-col sm:flex-row gap-2 sm:gap-4">
             <Button variant="outline" className="text-white border-white/20">
-              Export data
+              Deposit
             </Button>
             <Button className="bg-indigo-500 hover:bg-indigo-600">
               Create report
