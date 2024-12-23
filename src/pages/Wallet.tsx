@@ -18,12 +18,16 @@ export default function Wallet() {
       pageviewsChange: 12.3,
       profits: "156",
       profitsChange: 8.1,
+      invested: "1.8K",
+      investedChange: 15.2,
     },
     real: {
       pageviews: "50.8K",
       pageviewsChange: 28.4,
       profits: "2.3K",
       profitsChange: 9.2,
+      invested: "45.2K",
+      investedChange: 22.5,
     }
   };
 
@@ -58,7 +62,7 @@ export default function Wallet() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
           <StatCard
             title="Current Balance"
             value={currentStats.pageviews}
@@ -69,6 +73,12 @@ export default function Wallet() {
             title="Profits"
             value={currentStats.profits}
             change={currentStats.profitsChange}
+            isPositive={true}
+          />
+          <StatCard
+            title="Invested Balance"
+            value={currentStats.invested}
+            change={currentStats.investedChange}
             isPositive={true}
           />
         </div>
