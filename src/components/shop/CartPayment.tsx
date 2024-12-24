@@ -27,6 +27,7 @@ export function CartPayment({ cartTotal, onSuccess }: CartPaymentProps) {
       <PayPalButtons
         createOrder={(data, actions) => {
           return actions.order.create({
+            intent: "CAPTURE",
             purchase_units: [
               {
                 amount: {

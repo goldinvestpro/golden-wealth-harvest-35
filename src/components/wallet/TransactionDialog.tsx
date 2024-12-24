@@ -10,6 +10,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { PayPalButtons } from "@paypal/react-paypal-js";
 
 interface TransactionDialogProps {
   isOpen: boolean;
@@ -55,7 +56,9 @@ export function TransactionDialog({
             {type} {isDemoAccount ? "(Demo Account)" : ""}
           </DialogTitle>
           <DialogDescription>
-            Enter the amount you want to {type}.
+            {type === "deposit" 
+              ? "Choose your preferred deposit method and enter the amount."
+              : "Enter the amount you want to withdraw."}
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit}>
@@ -71,12 +74,64 @@ export function TransactionDialog({
                 className="col-span-4"
               />
             </div>
+            {type === "deposit" && !isDemoAccount && (
+              <div className="mt-4">
+                <PayPalButtons
+                  createOrder={(data, actions) => {
+                    const numAmount = parseFloat(amount);
+                    if (isNaN(numAmount) || numAmount <= 0) {
+                      toast({
+                        title: "Invalid amount",
+                        description: "Please enter a valid amount first.",
+                        variant: "destructive",
+                      });
+                      return Promise.reject();
+                    }
+                    return actions.order.create({
+                      intent: "CAPTURE",
+                      purchase_units: [
+                        {
+                          amount: {
+                            value: numAmount.toString(),
+                            currency_code: "USD",
+                          },
+                        },
+                      ],
+                    });
+                  }}
+                  onApprove={async (data, actions) => {
+                    if (actions.order) {
+                      const details = await actions.order.capture();
+                      console.log("Payment completed", details);
+                      const numAmount = parseFloat(amount);
+                      onTransaction(numAmount);
+                      setAmount("");
+                      onClose();
+                      toast({
+                        title: "Payment Successful",
+                        description: "Your deposit has been processed successfully.",
+                      });
+                    }
+                  }}
+                  onError={() => {
+                    toast({
+                      title: "Payment Error",
+                      description: "There was an error processing your payment. Please try again.",
+                      variant: "destructive",
+                    });
+                  }}
+                  style={{ layout: "horizontal" }}
+                />
+              </div>
+            )}
           </div>
           <DialogFooter>
             <Button type="button" variant="outline" onClick={onClose}>
               Cancel
             </Button>
-            <Button type="submit">Confirm {type}</Button>
+            <Button type="submit">
+              {type === "deposit" && isDemoAccount ? "Demo Deposit" : type === "withdraw" ? "Withdraw" : "Manual Deposit"}
+            </Button>
           </DialogFooter>
         </form>
       </DialogContent>
