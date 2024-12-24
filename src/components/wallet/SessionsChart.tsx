@@ -1,51 +1,57 @@
-import { Card, CardContent } from "@/components/ui/card";
-import { BarChart, Bar, XAxis, Tooltip, ResponsiveContainer } from "recharts";
-
-const sessionData = Array.from({ length: 24 }, (_, i) => ({
-  hour: `${i}:00`,
-  sessions: Math.floor(Math.random() * 300) + 100,
-}));
-
-const demoSessionData = sessionData.map(item => ({
-  ...item,
-  sessions: Math.floor(item.sessions * 0.2)
-}));
+import { Bar, BarChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 
 interface SessionsChartProps {
-  isDemoAccount?: boolean;
+  isDemoAccount: boolean;
 }
 
-export function SessionsChart({ isDemoAccount = false }: SessionsChartProps) {
-  const chartData = isDemoAccount ? demoSessionData : sessionData;
+export function SessionsChart({ isDemoAccount }: SessionsChartProps) {
+  const data = isDemoAccount ? [
+    { name: "Mon", total: 10 },
+    { name: "Tue", total: 8 },
+    { name: "Wed", total: 12 },
+  ] : [
+    { name: "Mon", total: 100 },
+    { name: "Tue", total: 80 },
+    { name: "Wed", total: 120 },
+    { name: "Thu", total: 90 },
+    { name: "Fri", total: 110 },
+    { name: "Sat", total: 70 },
+    { name: "Sun", total: 60 },
+  ];
 
   return (
-    <Card className="bg-navy-500 border-white/10">
-      <CardContent>
-        <div className="h-[200px]">
+    <div className="rounded-lg border bg-navy-500 border-white/10 p-4">
+      <div className="flex flex-col gap-4">
+        <div>
+          <h3 className="text-lg font-semibold text-white">Daily Sessions</h3>
+          <p className="text-sm text-gray-400">User activity per day</p>
+        </div>
+        <div className="h-[200px] sm:h-[300px] w-full">
           <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={chartData}>
-              <XAxis 
-                dataKey="hour" 
-                stroke="#ffffff20"
-                tick={{ fill: '#94A3B8' }}
+            <BarChart data={data}>
+              <XAxis
+                dataKey="name"
+                stroke="#888888"
+                fontSize={12}
+                tickLine={false}
+                axisLine={false}
               />
-              <Tooltip 
-                contentStyle={{ 
-                  backgroundColor: '#1E293B',
-                  border: 'none',
-                  borderRadius: '8px',
-                  color: '#fff'
-                }}
+              <YAxis
+                stroke="#888888"
+                fontSize={12}
+                tickLine={false}
+                axisLine={false}
               />
-              <Bar 
-                dataKey="sessions" 
-                fill="#3B82F6"
+              <Tooltip />
+              <Bar
+                dataKey="total"
+                fill="#FFD700"
                 radius={[4, 4, 0, 0]}
               />
             </BarChart>
           </ResponsiveContainer>
         </div>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 }
