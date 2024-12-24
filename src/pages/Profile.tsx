@@ -4,21 +4,38 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
-import { UserRound, Mail, Phone, MapPin, Settings2 } from "lucide-react";
+import { UserRound, Mail, Phone, MapPin, Settings2, Upload } from "lucide-react";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useToast } from "@/components/ui/use-toast";
 
 const Profile = () => {
   const { toast } = useToast();
   const [isEditing, setIsEditing] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [profileImage, setProfileImage] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     name: "John Smith",
     email: "john.smith@example.com",
     phone: "+1 (555) 123-4567",
     address: "123 Investment Ave, New York, NY",
   });
+
+  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setProfileImage(reader.result as string);
+        toast({
+          title: "Profile Picture Updated",
+          description: "Your profile picture has been successfully updated.",
+        });
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   const handleSave = () => {
     setIsEditing(false);
@@ -50,10 +67,32 @@ const Profile = () => {
             <CardContent>
               <div className="flex flex-col md:flex-row gap-8 items-start">
                 <div className="flex flex-col items-center space-y-4">
-                  <Avatar className="h-32 w-32">
-                    <AvatarImage src="/placeholder.svg" />
-                    <AvatarFallback>JS</AvatarFallback>
-                  </Avatar>
+                  <div className="relative group">
+                    <Avatar className="h-32 w-32">
+                      <AvatarImage src={profileImage || "/placeholder.svg"} alt="Profile picture" />
+                      <AvatarFallback>
+                        {formData.name
+                          .split(" ")
+                          .map((n) => n[0])
+                          .join("")}
+                      </AvatarFallback>
+                    </Avatar>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="absolute bottom-0 right-0 rounded-full p-2"
+                      onClick={() => fileInputRef.current?.click()}
+                    >
+                      <Upload className="h-4 w-4" />
+                    </Button>
+                    <input
+                      type="file"
+                      ref={fileInputRef}
+                      className="hidden"
+                      accept="image/*"
+                      onChange={handleImageUpload}
+                    />
+                  </div>
                   {!isEditing && (
                     <div className="text-center">
                       <h3 className="font-semibold text-lg">{formData.name}</h3>
