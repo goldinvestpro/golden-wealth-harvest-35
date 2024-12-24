@@ -1,6 +1,5 @@
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { ShoppingCart, Minus, Plus } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
@@ -98,8 +97,6 @@ const Shop = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <Navigation />
-      
       <main className="flex-grow container mx-auto px-4 py-8">
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-3xl font-bold text-navy-500">Gold Investment Products</h1>

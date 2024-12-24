@@ -1,4 +1,3 @@
-import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 
 const Blog = () => {
@@ -31,8 +30,6 @@ const Blog = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Navigation />
-      
       <main className="container mx-auto px-4 py-12">
         <h1 className="text-4xl font-bold text-navy-500 mb-8">Latest Insights</h1>
         
