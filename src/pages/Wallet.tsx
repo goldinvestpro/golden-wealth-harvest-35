@@ -9,20 +9,20 @@ export default function Wallet() {
 
   const stats = {
     demo: {
-      pageviews: "2.1K",
-      pageviewsChange: 12.3,
-      profits: "156",
-      profitsChange: 8.1,
-      invested: "1.8K",
-      investedChange: 15.2,
+      pageviews: localStorage.getItem('demoBalance') || "0",
+      pageviewsChange: 0,
+      profits: "0",
+      profitsChange: 0,
+      invested: "0",
+      investedChange: 0,
     },
     real: {
-      pageviews: "50.8K",
-      pageviewsChange: 28.4,
-      profits: "2.3K",
-      profitsChange: 9.2,
-      invested: "45.2K",
-      investedChange: 22.5,
+      pageviews: "0",
+      pageviewsChange: 0,
+      profits: "0",
+      profitsChange: 0,
+      invested: "0",
+      investedChange: 0,
     }
   };
 
