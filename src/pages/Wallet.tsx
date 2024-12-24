@@ -3,7 +3,6 @@ import { WalletHeader } from "@/components/wallet/WalletHeader";
 import { WalletStats } from "@/components/wallet/WalletStats";
 import { WalletCharts } from "@/components/wallet/WalletCharts";
 import { TransactionHistory } from "@/components/wallet/TransactionHistory";
-import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 
 export default function Wallet() {
   const [isDemoAccount, setIsDemoAccount] = useState(false);
@@ -30,27 +29,21 @@ export default function Wallet() {
   const currentStats = isDemoAccount ? stats.demo : stats.real;
 
   return (
-    <PayPalScriptProvider options={{ 
-      clientId: "AYvK_buyCXDM9qj9XddqPQHq6dO1vb5XY9fCHI5FJAvcfRJ4GEz7Z9vLGZN5HrfLHEx8gqx0ZwkWtNgk", // Replace with your PayPal client ID
-      currency: "USD",
-      intent: "capture"
-    }}>
-      <div className="min-h-screen bg-navy-500 text-white p-4 sm:p-8">
-        <div className="max-w-[1400px] mx-auto">
-          <WalletHeader 
-            isDemoAccount={isDemoAccount}
-            setIsDemoAccount={setIsDemoAccount}
-          />
-          
-          <WalletStats currentStats={currentStats} />
-          
-          <WalletCharts isDemoAccount={isDemoAccount} />
+    <div className="min-h-screen bg-navy-500 text-white p-4 sm:p-8">
+      <div className="max-w-[1400px] mx-auto">
+        <WalletHeader 
+          isDemoAccount={isDemoAccount}
+          setIsDemoAccount={setIsDemoAccount}
+        />
+        
+        <WalletStats currentStats={currentStats} />
+        
+        <WalletCharts isDemoAccount={isDemoAccount} />
 
-          <div className="mt-8">
-            <TransactionHistory isDemoAccount={isDemoAccount} />
-          </div>
+        <div className="mt-8">
+          <TransactionHistory isDemoAccount={isDemoAccount} />
         </div>
       </div>
-    </PayPalScriptProvider>
+    </div>
   );
 }

@@ -1,5 +1,5 @@
-import { RevenueChart } from "./RevenueChart";
-import { SessionsChart } from "./SessionsChart";
+import { RevenueChart } from "@/components/wallet/RevenueChart";
+import { SessionsChart } from "@/components/wallet/SessionsChart";
 
 interface WalletChartsProps {
   isDemoAccount: boolean;
@@ -7,11 +7,11 @@ interface WalletChartsProps {
 
 export function WalletCharts({ isDemoAccount }: WalletChartsProps) {
   return (
-    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
-      <div className="col-span-4">
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-8 mb-8">
+      <div className="lg:col-span-2">
         <RevenueChart isDemoAccount={isDemoAccount} />
       </div>
-      <div className="col-span-3">
+      <div>
         <SessionsChart isDemoAccount={isDemoAccount} />
       </div>
     </div>
