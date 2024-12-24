@@ -1,4 +1,4 @@
-import { Calculator, Calendar, TrendingUp } from "lucide-react";
+import { Calculator, Calendar, TrendingUp, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -121,8 +121,11 @@ export const InvestmentPlans = () => {
               <CardFooter>
                 <AlertDialog>
                   <AlertDialogTrigger asChild>
-                    <Button className="w-full bg-navy-500 hover:bg-navy-400 text-white">
+                    <Button 
+                      className="w-full bg-[#9b87f5] hover:bg-[#8B5CF6] text-white font-semibold transition-all duration-300 group"
+                    >
                       Start Investing
+                      <ArrowRight className="ml-2 h-4 w-4 transform group-hover:translate-x-1 transition-transform" />
                     </Button>
                   </AlertDialogTrigger>
                   <AlertDialogContent>
@@ -137,7 +140,7 @@ export const InvestmentPlans = () => {
                       <AlertDialogCancel>Cancel</AlertDialogCancel>
                       <AlertDialogAction
                         onClick={() => handleConfirmInvestment(plan.title, plan.minInvestment)}
-                        className="bg-navy-500 hover:bg-navy-400 text-white"
+                        className="bg-[#9b87f5] hover:bg-[#8B5CF6] text-white"
                       >
                         Confirm Selection
                       </AlertDialogAction>
