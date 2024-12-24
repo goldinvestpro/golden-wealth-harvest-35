@@ -11,27 +11,48 @@ import {
 
 const plans = [
   {
-    title: "Weekly Returns",
-    description: "Perfect for active traders",
+    title: "Gold Starter Plan",
+    description: "Perfect for new investors starting their wealth journey",
     returns: "2-3%",
     period: "Weekly",
-    features: ["Weekly profit distribution", "Flexible investment amount", "24/7 market monitoring"],
+    minInvestment: "$400",
+    features: [
+      "Weekly profit distribution ($1,000 yields $20-30)",
+      "Flexible investment starting from $400",
+      "24/7 market monitoring",
+      "Real-time portfolio tracking",
+      "Basic investment guidance"
+    ],
     icon: Calculator,
   },
   {
-    title: "Monthly Growth",
-    description: "Balanced investment approach",
+    title: "Premium Growth Plan",
+    description: "Ideal for building consistent wealth",
     returns: "8-10%",
     period: "Monthly",
-    features: ["Monthly profit distribution", "Priority support", "Market analysis reports"],
+    minInvestment: "$2,000",
+    features: [
+      "Monthly compound returns ($2,000 yields $160-200)",
+      "Priority customer support",
+      "Detailed market analysis reports",
+      "Quarterly strategy reviews",
+      "Reinvestment options for faster growth"
+    ],
     icon: Calendar,
   },
   {
-    title: "Yearly Wealth",
-    description: "Long-term wealth building",
+    title: "Elite Wealth Plan",
+    description: "Maximum returns for serious investors",
     returns: "25-30%",
     period: "Yearly",
-    features: ["Highest return potential", "Dedicated account manager", "Comprehensive portfolio review"],
+    minInvestment: "$5,000",
+    features: [
+      "Highest annual returns ($5,000 yields $1,250-1,500)",
+      "Dedicated wealth manager",
+      "Comprehensive portfolio optimization",
+      "VIP access to new investment opportunities",
+      "Bi-annual wealth planning sessions"
+    ],
     icon: TrendingUp,
   },
 ];
@@ -43,7 +64,7 @@ export const InvestmentPlans = () => {
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">Investment Plans</h2>
         <p className="text-gray-600 text-center mb-8 md:mb-12 max-w-2xl mx-auto">
           Choose an investment plan that matches your financial goals. Our flexible
-          options cater to different investment strategies.
+          options cater to different investment strategies and budgets.
         </p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
           {plans.map((plan) => (
@@ -63,6 +84,10 @@ export const InvestmentPlans = () => {
                   </span>
                   <span className="text-gray-600 ml-2">{plan.period}</span>
                 </div>
+                <div className="mb-4">
+                  <span className="text-sm text-gray-600">Minimum Investment:</span>
+                  <span className="ml-2 font-semibold text-navy-500">{plan.minInvestment}</span>
+                </div>
                 <ul className="space-y-3">
                   {plan.features.map((feature) => (
                     <li key={feature} className="flex items-center text-gray-600">
@@ -73,8 +98,8 @@ export const InvestmentPlans = () => {
                 </ul>
               </CardContent>
               <CardFooter>
-                <Button className="w-full bg-navy-500 hover:bg-navy-400">
-                  Choose Plan
+                <Button className="w-full bg-navy-500 hover:bg-navy-400 text-white">
+                  Start Investing
                 </Button>
               </CardFooter>
             </Card>
