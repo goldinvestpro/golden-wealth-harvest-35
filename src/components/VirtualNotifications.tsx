@@ -52,8 +52,12 @@ export const VirtualNotifications = () => {
 
     toast({
       title: "New Activity",
-      description: message,
-      icon: <Icon className="h-4 w-4" />,
+      description: (
+        <div className="flex items-center gap-2">
+          <Icon className="h-4 w-4" />
+          <span>{message}</span>
+        </div>
+      ),
       duration: 3000,
     });
   };
