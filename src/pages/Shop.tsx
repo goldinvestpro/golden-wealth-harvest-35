@@ -40,13 +40,6 @@ const Shop = () => {
       image: "/lovable-uploads/dfd8347a-dfdf-4cb3-b722-877d9ad234d9.png"
     },
     {
-      id: 4,
-      name: "Gold Investment Package",
-      price: 5000.00,
-      description: "Diversified gold investment package including physical gold and certificates.",
-      image: "/lovable-uploads/8cea0754-5101-4f52-b47b-eb63b647a036.png"
-    },
-    {
       id: 5,
       name: "Premium Gold Bar Set",
       price: 75000.00,
