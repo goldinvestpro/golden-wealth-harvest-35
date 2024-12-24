@@ -28,6 +28,13 @@ export const HeroSection = () => {
     }
   };
 
+  const scrollToInvestmentPlans = () => {
+    const investmentPlansSection = document.getElementById('investment-plans');
+    if (investmentPlansSection) {
+      investmentPlansSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <div className="relative bg-gradient-to-b from-navy-500 to-navy-400 text-white py-12 md:py-20">
       <div className="container mx-auto px-4">
@@ -58,6 +65,7 @@ export const HeroSection = () => {
             <Button
               className="bg-gold-400 text-navy-500 hover:bg-gold-500 transition-all w-full sm:w-auto"
               size="lg"
+              onClick={scrollToInvestmentPlans}
             >
               Invest
             </Button>

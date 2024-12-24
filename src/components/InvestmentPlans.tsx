@@ -80,7 +80,7 @@ export const InvestmentPlans = () => {
   };
 
   return (
-    <div className="py-12 md:py-20 bg-white">
+    <div id="investment-plans" className="py-12 md:py-20 bg-white">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">Investment Plans</h2>
         <p className="text-gray-600 text-center mb-8 md:mb-12 max-w-2xl mx-auto">
