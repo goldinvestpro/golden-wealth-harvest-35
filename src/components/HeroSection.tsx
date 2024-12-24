@@ -1,9 +1,11 @@
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
+import { useNavigate } from "react-router-dom";
 
 export const HeroSection = () => {
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   const handleDemoClick = () => {
     // In a real app, this would interact with a backend
@@ -42,6 +44,7 @@ export const HeroSection = () => {
             <Button
               className="bg-gold-300 text-navy-500 hover:bg-gold-400 transition-all w-full sm:w-auto"
               size="lg"
+              onClick={() => navigate('/shop')}
             >
               Buy Now <ArrowRight className="ml-2" />
             </Button>
