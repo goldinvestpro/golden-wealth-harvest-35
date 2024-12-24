@@ -24,7 +24,7 @@ const Shop = () => {
       name: "1oz Gold Bar",
       price: 2050.00,
       description: "Pure 24k gold bar, perfect for investment.",
-      image: "/lovable-uploads/a55adaee-dc91-4f8d-b31e-d1579bf35f4b.png"
+      image: "/lovable-uploads/7e2790ff-1e0f-4dd6-9880-7a22be7bb381.png"
     },
     {
       id: 2,
