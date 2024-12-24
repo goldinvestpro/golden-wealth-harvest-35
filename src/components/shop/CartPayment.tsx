@@ -3,11 +3,11 @@ import { useToast } from "@/hooks/use-toast";
 import { PayPalButtons } from "@paypal/react-paypal-js";
 
 interface CartPaymentProps {
-  cartTotal: number;
-  onSuccess: () => void;
+  total: number;
+  onSuccess?: () => void;
 }
 
-export function CartPayment({ cartTotal, onSuccess }: CartPaymentProps) {
+export function CartPayment({ total, onSuccess }: CartPaymentProps) {
   const { toast } = useToast();
 
   const handlePaymentSuccess = () => {
@@ -15,14 +15,16 @@ export function CartPayment({ cartTotal, onSuccess }: CartPaymentProps) {
       title: "Payment Successful",
       description: "Your order has been processed successfully.",
     });
-    onSuccess();
+    if (onSuccess) {
+      onSuccess();
+    }
   };
 
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-center mt-4 pt-4 border-t">
         <span className="font-bold">Total:</span>
-        <span className="font-bold">${cartTotal.toLocaleString()}</span>
+        <span className="font-bold">${total.toLocaleString()}</span>
       </div>
       <PayPalButtons
         createOrder={(data, actions) => {
@@ -31,7 +33,7 @@ export function CartPayment({ cartTotal, onSuccess }: CartPaymentProps) {
             purchase_units: [
               {
                 amount: {
-                  value: cartTotal.toString(),
+                  value: total.toString(),
                   currency_code: "USD"
                 },
               },
