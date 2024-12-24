@@ -3,7 +3,8 @@ import { Button } from "@/components/ui/button";
 import { Footer } from "@/components/Footer";
 import { ShoppingCart, Minus, Plus } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { Helmet } from "react-helmet";
 
 interface CartItem {
   id: number;
@@ -13,6 +14,11 @@ interface CartItem {
 }
 
 const Shop = () => {
+  useEffect(() => {
+    // Update document title for SEO
+    document.title = "Gold Investment Products - GoldInvestPro Shop";
+  }, []);
+
   const { toast } = useToast();
   const [cart, setCart] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -89,23 +95,34 @@ const Shop = () => {
   const cartTotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <main className="flex-grow container mx-auto px-4 py-8">
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold text-navy-500">Gold Investment Products</h1>
-          <Button
-            variant="outline"
-            className="relative"
-            onClick={() => setIsCartOpen(!isCartOpen)}
-          >
-            <ShoppingCart className="h-5 w-5" />
-            {cart.length > 0 && (
-              <span className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">
-                {cart.reduce((total, item) => total + item.quantity, 0)}
-              </span>
-            )}
-          </Button>
-        </div>
+    <>
+      <Helmet>
+        <title>Gold Investment Products - GoldInvestPro Shop</title>
+        <meta name="description" content="Browse our premium selection of gold bars and investment packages. Secure your financial future with GoldInvestPro's certified gold products." />
+        <meta name="keywords" content="gold bars, gold investment, physical gold, premium gold, gold collection" />
+      </Helmet>
+
+      <div className="min-h-screen flex flex-col">
+        <main className="flex-grow container mx-auto px-4 py-8">
+          <header className="mb-8">
+            <h1 className="text-3xl font-bold text-navy-500">Gold Investment Products</h1>
+            <p className="text-gray-600 mt-2">Secure your future with our premium selection of gold products</p>
+          </header>
+
+          <div className="flex justify-end mb-8">
+            <Button
+              variant="outline"
+              className="relative"
+              onClick={() => setIsCartOpen(!isCartOpen)}
+            >
+              <ShoppingCart className="h-5 w-5" />
+              {cart.length > 0 && (
+                <span className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">
+                  {cart.reduce((total, item) => total + item.quantity, 0)}
+                </span>
+              )}
+            </Button>
+          </div>
 
         {isCartOpen && cart.length > 0 && (
           <div className="mb-8 p-4 border rounded-lg shadow-lg">
@@ -176,10 +193,11 @@ const Shop = () => {
             </Card>
           ))}
         </div>
-      </main>
+        </main>
 
-      <Footer />
-    </div>
+        <Footer />
+      </div>
+    </>
   );
 };
 
