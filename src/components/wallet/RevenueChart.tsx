@@ -1,98 +1,92 @@
-import { useEffect, useState } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
 
-interface GoldPriceDataPoint {
-  timestamp: string;
-  price: number;
+interface RevenueChartProps {
+  isDemoAccount: boolean;
 }
 
-export function RevenueChart() {
-  const [priceHistory, setPriceHistory] = useState<GoldPriceDataPoint[]>([]);
-  const [currentPrice, setCurrentPrice] = useState(1925.50);
-
-  // Initialize and update price history
-  useEffect(() => {
-    // Initialize with some historical data points
-    const initialHistory = Array.from({ length: 24 }, (_, i) => {
-      const date = new Date();
-      date.setHours(date.getHours() - (23 - i));
-      return {
-        timestamp: date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-        price: 1925.50 + (Math.random() - 0.5) * 10
-      };
-    });
-    setPriceHistory(initialHistory);
-  }, []);
-
-  // Update price and add to history
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const newPrice = currentPrice + (Math.random() - 0.5) * 2;
-      setCurrentPrice(Number(newPrice.toFixed(2)));
-      
-      setPriceHistory(prev => {
-        const newHistory = [...prev.slice(1), {
-          timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-          price: newPrice
-        }];
-        return newHistory;
-      });
-    }, 5000);
-
-    return () => clearInterval(interval);
-  }, [currentPrice]);
+export function RevenueChart({ isDemoAccount }: RevenueChartProps) {
+  const data = isDemoAccount ? [
+    {
+      name: "Jan",
+      total: Math.floor(Math.random() * 5000),
+    },
+    {
+      name: "Feb",
+      total: Math.floor(Math.random() * 5000),
+    },
+    {
+      name: "Mar",
+      total: Math.floor(Math.random() * 5000),
+    },
+    {
+      name: "Apr",
+      total: Math.floor(Math.random() * 5000),
+    },
+    {
+      name: "May",
+      total: Math.floor(Math.random() * 5000),
+    },
+    {
+      name: "Jun",
+      total: Math.floor(Math.random() * 5000),
+    },
+    {
+      name: "Jul",
+      total: Math.floor(Math.random() * 5000),
+    },
+    {
+      name: "Aug",
+      total: Math.floor(Math.random() * 5000),
+    },
+    {
+      name: "Sep",
+      total: Math.floor(Math.random() * 5000),
+    },
+    {
+      name: "Oct",
+      total: Math.floor(Math.random() * 5000),
+    },
+    {
+      name: "Nov",
+      total: Math.floor(Math.random() * 5000),
+    },
+    {
+      name: "Dec",
+      total: Math.floor(Math.random() * 5000),
+    },
+  ] : [];
 
   return (
-    <Card className="bg-navy-500 border-white/10">
-      <CardContent className="p-4 sm:p-6">
-        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-8">
-          <div>
-            <p className="text-sm text-gray-400">Gold Price Chart (24h)</p>
-            <h2 className="text-2xl sm:text-3xl font-bold">${currentPrice.toFixed(2)}</h2>
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="w-3 h-3 rounded-full bg-yellow-500" />
-            <span className="text-sm">Gold Price (USD/oz)</span>
-          </div>
-        </div>
-        <div className="h-[300px]">
-          <ResponsiveContainer width="100%" height="100%">
-            <AreaChart data={priceHistory}>
-              <defs>
-                <linearGradient id="colorGold" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#EAB308" stopOpacity={0.3}/>
-                  <stop offset="95%" stopColor="#EAB308" stopOpacity={0}/>
-                </linearGradient>
-              </defs>
-              <XAxis 
-                dataKey="timestamp" 
-                stroke="#ffffff20"
-                tick={{ fill: '#94A3B8' }}
-              />
-              <YAxis 
-                stroke="#ffffff20"
-                tick={{ fill: '#94A3B8' }}
-                domain={['auto', 'auto']}
-              />
-              <Tooltip 
-                contentStyle={{ 
-                  backgroundColor: '#1E293B',
-                  border: 'none',
-                  borderRadius: '8px',
-                  color: '#fff'
-                }}
-              />
-              <Area
-                type="monotone"
-                dataKey="price"
-                stroke="#EAB308"
-                fillOpacity={1}
-                fill="url(#colorGold)"
-              />
-            </AreaChart>
-          </ResponsiveContainer>
-        </div>
+    <Card>
+      <CardHeader>
+        <CardTitle>Revenue</CardTitle>
+      </CardHeader>
+      <CardContent className="pl-2">
+        <ResponsiveContainer width="100%" height={350}>
+          <BarChart data={data}>
+            <XAxis
+              dataKey="name"
+              stroke="#888888"
+              fontSize={12}
+              tickLine={false}
+              axisLine={false}
+            />
+            <YAxis
+              stroke="#888888"
+              fontSize={12}
+              tickLine={false}
+              axisLine={false}
+              tickFormatter={(value) => `$${value}`}
+            />
+            <Bar
+              dataKey="total"
+              fill="#adfa1d"
+              radius={[4, 4, 0, 0]}
+              className="fill-primary"
+            />
+          </BarChart>
+        </ResponsiveContainer>
       </CardContent>
     </Card>
   );
