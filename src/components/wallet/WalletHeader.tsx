@@ -79,7 +79,7 @@ export function WalletHeader({ isDemoAccount, setIsDemoAccount }: WalletHeaderPr
       <div className="flex flex-col sm:flex-row gap-2 sm:gap-4">
         <Button 
           variant="outline" 
-          className="text-white border-white/80 font-medium hover:bg-white/10 hover:text-white"
+          className="text-black border-white/80 font-medium hover:bg-white/10 hover:text-white"
           onClick={() => setIsDepositOpen(true)}
         >
           Deposit
