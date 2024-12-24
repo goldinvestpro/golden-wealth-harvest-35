@@ -22,10 +22,19 @@ export const Navigation = () => {
                 info@goldinvestpro.com
               </a>
             </div>
-            <div className="hidden md:flex items-center space-x-4 text-sm">
-              <a href="#" className="hover:text-gold-300">Market Updates</a>
-              <a href="#" className="hover:text-gold-300">Support</a>
-              <a href="#" className="hover:text-gold-300">Contact</a>
+            <div className="flex items-center space-x-4 text-sm">
+              <div className="hidden md:flex items-center space-x-4">
+                <a href="#" className="hover:text-gold-300">Market Updates</a>
+                <a href="#" className="hover:text-gold-300">Support</a>
+                <a href="#" className="hover:text-gold-300">Contact</a>
+              </div>
+              <Link 
+                to="/profile" 
+                className="hover:text-gold-300 transition-colors flex items-center gap-2 ml-4"
+              >
+                <UserRound size={20} />
+                <span>Profile</span>
+              </Link>
             </div>
           </div>
         </div>
@@ -67,13 +76,6 @@ export const Navigation = () => {
               <Button className="bg-gold-300 text-navy-500 hover:bg-gold-400">
                 Start Investing
               </Button>
-              <Link 
-                to="/profile" 
-                className="hover:text-gold-300 transition-colors flex items-center gap-2"
-              >
-                <UserRound size={20} />
-                <span>Profile</span>
-              </Link>
             </div>
           </div>
         </div>
@@ -96,13 +98,6 @@ export const Navigation = () => {
           <Button className="bg-gold-300 text-navy-500 hover:bg-gold-400 w-[calc(100%-2rem)]">
             Start Investing
           </Button>
-          <Link 
-            to="/profile" 
-            className="hover:text-gold-300 transition-colors flex items-center gap-2"
-          >
-            <UserRound size={20} />
-            <span>Profile</span>
-          </Link>
         </div>
       </nav>
     </div>
