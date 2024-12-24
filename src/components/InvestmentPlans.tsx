@@ -8,6 +8,18 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { useToast } from "@/hooks/use-toast";
 
 const plans = [
   {
@@ -58,6 +70,15 @@ const plans = [
 ];
 
 export const InvestmentPlans = () => {
+  const { toast } = useToast();
+
+  const handleConfirmInvestment = (planTitle: string, minInvestment: string) => {
+    toast({
+      title: "Investment Plan Selected",
+      description: `You have selected the ${planTitle} with a minimum investment of ${minInvestment}. Our team will contact you shortly.`,
+    });
+  };
+
   return (
     <div className="py-12 md:py-20 bg-white">
       <div className="container mx-auto px-4">
@@ -98,9 +119,31 @@ export const InvestmentPlans = () => {
                 </ul>
               </CardContent>
               <CardFooter>
-                <Button className="w-full bg-navy-500 hover:bg-navy-400 text-white">
-                  Start Investing
-                </Button>
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <Button className="w-full bg-navy-500 hover:bg-navy-400 text-white">
+                      Start Investing
+                    </Button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>Confirm Investment Plan</AlertDialogTitle>
+                      <AlertDialogDescription>
+                        You are about to select the {plan.title} with a minimum investment of {plan.minInvestment}.
+                        This plan offers {plan.returns} {plan.period.toLowerCase()} returns. Would you like to proceed?
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>Cancel</AlertDialogCancel>
+                      <AlertDialogAction
+                        onClick={() => handleConfirmInvestment(plan.title, plan.minInvestment)}
+                        className="bg-navy-500 hover:bg-navy-400 text-white"
+                      >
+                        Confirm Selection
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
               </CardFooter>
             </Card>
           ))}
