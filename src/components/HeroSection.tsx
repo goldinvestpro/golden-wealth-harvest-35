@@ -1,7 +1,31 @@
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useToast } from "@/components/ui/use-toast";
 
 export const HeroSection = () => {
+  const { toast } = useToast();
+
+  const handleDemoClick = () => {
+    // In a real app, this would interact with a backend
+    // For now, we'll store it in localStorage
+    const currentBalance = localStorage.getItem('demoBalance');
+    if (!currentBalance) {
+      localStorage.setItem('demoBalance', '10000');
+      localStorage.setItem('isDemoAccount', 'true');
+      toast({
+        title: "Demo Account Credited!",
+        description: "Your demo account has been credited with $10,000 USD. Happy investing!",
+        duration: 5000,
+      });
+    } else {
+      toast({
+        title: "Demo Account Active",
+        description: "You already have a demo account with virtual funds.",
+        duration: 3000,
+      });
+    }
+  };
+
   return (
     <div className="relative bg-gradient-to-b from-navy-500 to-navy-400 text-white py-12 md:py-20">
       <div className="container mx-auto px-4">
@@ -24,6 +48,7 @@ export const HeroSection = () => {
             <Button
               className="bg-navy-400 text-gold-300 hover:bg-navy-300 border-2 border-gold-300 transition-all w-full sm:w-auto"
               size="lg"
+              onClick={handleDemoClick}
             >
               Try Demo
             </Button>
