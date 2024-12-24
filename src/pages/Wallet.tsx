@@ -39,6 +39,12 @@ export default function Wallet() {
     "immediately added to your Current Balance, ensuring an up-to-date and accurate account value. " +
     "This metric is essential for tracking your investment performance, progress, and overall account activity.";
 
+  const investedBalanceDescription = 
+    "The Invested Balance shows the portion of your Current Balance that is actively invested in our plans. " +
+    "When you invest in a plan, that amount is automatically deducted from your Current Balance and added " +
+    "to your Invested Balance. This helps you track how much of your capital is currently working for you " +
+    "versus available for new investments.";
+
   return (
     <div className="min-h-screen bg-navy-500 text-white p-4 sm:p-8">
       <div className="max-w-[1400px] mx-auto">
@@ -87,6 +93,7 @@ export default function Wallet() {
             value={currentStats.invested}
             change={currentStats.investedChange}
             isPositive={true}
+            description={investedBalanceDescription}
           />
         </div>
 
