@@ -28,16 +28,16 @@ const products = [
   }
 ];
 
-export type CartItem = {
+interface CartItemType {
   id: number;
   name: string;
   price: number;
   quantity: number;
   image: string;
-};
+}
 
 export default function Shop() {
-  const [cart, setCart] = useState<CartItem[]>([]);
+  const [cart, setCart] = useState<CartItemType[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
 
   const addToCart = (productId: number) => {
@@ -76,11 +76,14 @@ export default function Shop() {
 
   const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
+  const paypalOptions = {
+    "client-id": "test",
+    currency: "USD",
+    intent: "capture"
+  };
+
   return (
-    <PayPalScriptProvider options={{ 
-      clientId: "test",
-      currency: "USD" 
-    }}>
+    <PayPalScriptProvider options={paypalOptions}>
       <div className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {products.map(product => (
@@ -120,7 +123,13 @@ export default function Shop() {
 
               {cart.length > 0 && (
                 <div className="border-t p-4">
-                  <CartPayment total={total} />
+                  <CartPayment 
+                    total={total}
+                    onSuccess={() => {
+                      setCart([]);
+                      setIsCartOpen(false);
+                    }}
+                  />
                 </div>
               )}
             </div>
