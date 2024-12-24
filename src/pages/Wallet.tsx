@@ -33,6 +33,12 @@ export default function Wallet() {
 
   const currentStats = isDemoAccount ? stats.demo : stats.real;
 
+  const currentBalanceDescription = 
+    "The Current Balance reflects your total financial standing, including initial contributions, " +
+    "returns generated over time, and any additional deposits. When you make a deposit, funds are " +
+    "immediately added to your Current Balance, ensuring an up-to-date and accurate account value. " +
+    "This metric is essential for tracking your investment performance, progress, and overall account activity.";
+
   return (
     <div className="min-h-screen bg-navy-500 text-white p-4 sm:p-8">
       <div className="max-w-[1400px] mx-auto">
@@ -53,7 +59,7 @@ export default function Wallet() {
             </div>
           </div>
           <div className="flex flex-col sm:flex-row gap-2 sm:gap-4">
-            <Button variant="outline" className="text-black border-white/80 font-medium hover:bg-white/10 hover:text-black">
+            <Button variant="outline" className="text-white border-white/80 font-medium hover:bg-white/10 hover:text-white">
               Deposit
             </Button>
             <Button className="bg-gold-300 hover:bg-gold-400 text-navy-500 font-medium">
@@ -68,6 +74,7 @@ export default function Wallet() {
             value={currentStats.pageviews}
             change={currentStats.pageviewsChange}
             isPositive={true}
+            description={currentBalanceDescription}
           />
           <StatCard
             title="Profits"
