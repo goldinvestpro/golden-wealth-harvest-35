@@ -7,6 +7,7 @@ import Index from "./pages/Index";
 import Wallet from "./pages/Wallet";
 import Blog from "./pages/Blog";
 import Shop from "./pages/Shop";
+import Profile from "./pages/Profile";
 
 const queryClient = new QueryClient();
 
@@ -21,6 +22,7 @@ const App = () => (
           <Route path="/wallet" element={<Wallet />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/shop" element={<Shop />} />
+          <Route path="/profile" element={<Profile />} />
         </Routes>
       </BrowserRouter>
     </TooltipProvider>
