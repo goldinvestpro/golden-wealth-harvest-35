@@ -122,7 +122,7 @@ export const InvestmentPlans = () => {
                 <AlertDialog>
                   <AlertDialogTrigger asChild>
                     <Button 
-                      className="w-full bg-[#9b87f5] hover:bg-[#8B5CF6] text-white font-semibold transition-all duration-300 group"
+                      className="w-full text-sm sm:text-base py-2 sm:py-3 px-4 sm:px-6 bg-[#9b87f5] hover:bg-[#8B5CF6] text-white font-semibold transition-all duration-300 group"
                     >
                       Start Investing
                       <ArrowRight className="ml-2 h-4 w-4 transform group-hover:translate-x-1 transition-transform" />
