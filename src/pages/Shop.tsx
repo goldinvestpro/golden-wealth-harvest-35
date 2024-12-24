@@ -77,7 +77,7 @@ export default function Shop() {
   const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   const paypalOptions = {
-    "client-id": "test",
+    clientId: "test", // Changed from "client-id" to "clientId"
     currency: "USD",
     intent: "capture"
   };
