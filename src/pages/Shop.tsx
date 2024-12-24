@@ -103,8 +103,9 @@ const Shop = () => {
 
   return (
     <PayPalScriptProvider options={{ 
-      "client-id": "test", // Replace with your PayPal client ID
-      currency: "USD"
+      clientId: "AYvK_buyCXDM9qj9XddqPQHq6dO1vb5XY9fCHI5FJAvcfRJ4GEz7Z9vLGZN5HrfLHEx8gqx0ZwkWtNgk",  // Replace with your PayPal client ID
+      currency: "USD",
+      intent: "capture"
     }}>
       <div className="min-h-screen flex flex-col">
         <Helmet>
