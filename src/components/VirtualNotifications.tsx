@@ -26,9 +26,25 @@ const activities = [
 ];
 
 const names = [
-  "John", "Emma", "Michael", "Sophia", "William", "Olivia",
-  "James", "Ava", "Alexander", "Isabella", "Daniel", "Mia",
-  "David", "Charlotte", "Joseph", "Amelia", "Henry", "Harper"
+  // Western European names
+  "Müller", "Dupont", "Smith", "O'Connor", "MacDonald", "Evans", "Carter",
+  // Southern European names
+  "Rossi", "García", "Pereira", "Fernández", "López", "Silva",
+  // Eastern European names
+  "Petrov",
+  // Nordic names
+  "Jónsson",
+  // Asian names
+  "Yamamoto", "Kim", "Patel", "Zhang", "Nguyen",
+  // African names
+  "Abebe", "Okafor", "Mensah", "Mwangi", "Diop",
+  // Middle Eastern names
+  "Al-Farsi", "Haddad", "Bakir", "Khan", "Mansouri",
+  // British aristocratic-sounding names
+  "Harrington", "Sinclair", "Donovan", "Kensington", "Montgomery",
+  "Thornton", "Caldwell", "Whitaker", "Pennington", "Ashworth",
+  "Langston", "Fairchild", "Prescott", "Abernathy", "Ellington",
+  "Winslow", "Radcliffe", "Beaumont", "Hawthorne", "Chamberlain"
 ];
 
 export const VirtualNotifications = () => {
