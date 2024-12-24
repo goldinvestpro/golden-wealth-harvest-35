@@ -7,34 +7,32 @@ export const HeroSection = () => {
       <div className="container mx-auto px-4">
         <div className="max-w-3xl">
           <h1 className="text-3xl md:text-5xl font-bold mb-4 md:mb-6">
-            Transform Your Future with{" "}
-            <span className="text-gold-300">Strategic Gold Investment</span>
+            Invest in Gold,{" "}
+            <span className="text-gold-300">Secure Your Future</span>
           </h1>
           <p className="text-lg md:text-xl mb-6 md:mb-8 text-gray-200">
-            Join thousands of successful investors who have secured their financial future through our proven gold investment strategies. Start your journey to wealth preservation today.
+            Start your journey in gold investment with GoldInvestPro. Choose your
+            preferred investment timeline and watch your wealth grow.
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
             <Button
               className="bg-gold-300 text-navy-500 hover:bg-gold-400 transition-all w-full sm:w-auto"
               size="lg"
             >
-              Start Investing <ArrowRight className="ml-2" />
+              Buy Now <ArrowRight className="ml-2" />
             </Button>
             <Button
               className="bg-navy-400 text-gold-300 hover:bg-navy-300 border-2 border-gold-300 transition-all w-full sm:w-auto"
               size="lg"
             >
-              Learn More
+              Try Demo
             </Button>
             <Button
               className="bg-gold-400 text-navy-500 hover:bg-gold-500 transition-all w-full sm:w-auto"
               size="lg"
             >
-              Contact Us
+              Invest
             </Button>
-          </div>
-          <div className="mt-8 text-sm text-gray-300">
-            Trusted by over 10,000+ investors worldwide
           </div>
         </div>
       </div>
