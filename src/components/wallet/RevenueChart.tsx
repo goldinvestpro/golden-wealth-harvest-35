@@ -2,33 +2,39 @@ import { useEffect, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
 
+interface RevenueChartProps {
+  isDemoAccount?: boolean;
+}
+
 interface GoldPriceDataPoint {
   timestamp: string;
   price: number;
 }
 
-export function RevenueChart() {
+export function RevenueChart({ isDemoAccount = false }: RevenueChartProps) {
   const [priceHistory, setPriceHistory] = useState<GoldPriceDataPoint[]>([]);
   const [currentPrice, setCurrentPrice] = useState(1925.50);
 
-  // Initialize and update price history
+  // Initialize with demo or real data based on account type
   useEffect(() => {
-    // Initialize with some historical data points
+    const basePrice = isDemoAccount ? 500.25 : 1925.50;
     const initialHistory = Array.from({ length: 24 }, (_, i) => {
       const date = new Date();
       date.setHours(date.getHours() - (23 - i));
       return {
         timestamp: date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-        price: 1925.50 + (Math.random() - 0.5) * 10
+        price: basePrice + (Math.random() - 0.5) * (isDemoAccount ? 5 : 10)
       };
     });
     setPriceHistory(initialHistory);
-  }, []);
+    setCurrentPrice(basePrice);
+  }, [isDemoAccount]);
 
   // Update price and add to history
   useEffect(() => {
     const interval = setInterval(() => {
-      const newPrice = currentPrice + (Math.random() - 0.5) * 2;
+      const variation = isDemoAccount ? 1 : 2;
+      const newPrice = currentPrice + (Math.random() - 0.5) * variation;
       setCurrentPrice(Number(newPrice.toFixed(2)));
       
       setPriceHistory(prev => {
@@ -41,7 +47,7 @@ export function RevenueChart() {
     }, 5000);
 
     return () => clearInterval(interval);
-  }, [currentPrice]);
+  }, [currentPrice, isDemoAccount]);
 
   return (
     <Card className="bg-navy-500 border-white/10">
