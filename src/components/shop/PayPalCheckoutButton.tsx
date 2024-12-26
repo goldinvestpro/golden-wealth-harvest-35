@@ -21,12 +21,12 @@ export function PayPalCheckoutButton({ amount, onSuccess, onError }: PayPalCheck
   useEffect(() => {
     const loadPayPalScript = async () => {
       try {
-        // Get client ID from Supabase
+        // Get client ID from Supabase using maybeSingle() instead of single()
         const { data, error } = await supabase
           .from('secrets')
           .select('value')
           .eq('name', 'PAYPAL_CLIENT_ID')
-          .single();
+          .maybeSingle();
 
         if (error) {
           console.error('Error fetching PayPal client ID:', error);
@@ -38,11 +38,11 @@ export function PayPalCheckoutButton({ amount, onSuccess, onError }: PayPalCheck
           return;
         }
 
-        if (!data?.value) {
+        if (!data) {
           console.error('PayPal client ID not found');
           toast({
             title: "Configuration Error",
-            description: "PayPal configuration is missing. Please try again later.",
+            description: "PayPal configuration is missing. Please add the PAYPAL_CLIENT_ID secret.",
             variant: "destructive"
           });
           return;
