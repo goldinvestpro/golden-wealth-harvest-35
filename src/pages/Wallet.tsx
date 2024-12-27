@@ -3,7 +3,7 @@ import { WalletHeader } from "@/components/wallet/WalletHeader";
 import { WalletStats } from "@/components/wallet/WalletStats";
 import { WalletCharts } from "@/components/wallet/WalletCharts";
 import { TransactionHistory } from "@/components/wallet/TransactionHistory";
-import { PayPalInvestButton } from "@/components/wallet/PayPalInvestButton";
+// Removed PayPalInvestButton import
 
 export default function Wallet() {
   const [isDemoAccount, setIsDemoAccount] = useState(false);
@@ -45,9 +45,7 @@ export default function Wallet() {
           <TransactionHistory isDemoAccount={isDemoAccount} />
         </div>
 
-        <div className="flex justify-center mt-8">
-          <PayPalInvestButton />
-        </div>
+        {/* Removed PayPalInvestButton */}
       </div>
     </div>
   );
