@@ -1,5 +1,6 @@
 import { Calculator, Calendar, TrendingUp, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 import {
   Card,
   CardContent,
@@ -71,12 +72,22 @@ const plans = [
 
 export const InvestmentPlans = () => {
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   const handleConfirmInvestment = (planTitle: string, minInvestment: string) => {
     toast({
       title: "Investment Plan Selected",
-      description: `You have selected the ${planTitle} with a minimum investment of ${minInvestment}. Our team will contact you shortly.`,
+      description: `You have selected the ${planTitle} with a minimum investment of ${minInvestment}. Redirecting to payment...`,
     });
+    
+    // Store the selected plan in localStorage
+    localStorage.setItem('selectedPlan', JSON.stringify({
+      title: planTitle,
+      amount: minInvestment.replace('$', '')
+    }));
+    
+    // Redirect to wallet page
+    navigate('/wallet?action=deposit');
   };
 
   return (

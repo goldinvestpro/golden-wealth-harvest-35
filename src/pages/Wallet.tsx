@@ -1,12 +1,15 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { WalletHeader } from "@/components/wallet/WalletHeader";
 import { WalletStats } from "@/components/wallet/WalletStats";
 import { WalletCharts } from "@/components/wallet/WalletCharts";
 import { TransactionHistory } from "@/components/wallet/TransactionHistory";
-// Removed PayPalInvestButton import
+import { TransactionDialog } from "@/components/wallet/TransactionDialog";
 
 export default function Wallet() {
   const [isDemoAccount, setIsDemoAccount] = useState(false);
+  const [isDepositOpen, setIsDepositOpen] = useState(false);
+  const [searchParams] = useSearchParams();
 
   const stats = {
     demo: {
@@ -27,6 +30,12 @@ export default function Wallet() {
     }
   };
 
+  useEffect(() => {
+    if (searchParams.get('action') === 'deposit') {
+      setIsDepositOpen(true);
+    }
+  }, [searchParams]);
+
   const currentStats = isDemoAccount ? stats.demo : stats.real;
 
   return (
@@ -45,7 +54,16 @@ export default function Wallet() {
           <TransactionHistory isDemoAccount={isDemoAccount} />
         </div>
 
-        {/* Removed PayPalInvestButton */}
+        <TransactionDialog
+          isOpen={isDepositOpen}
+          onClose={() => setIsDepositOpen(false)}
+          type="deposit"
+          isDemoAccount={isDemoAccount}
+          onTransaction={(amount) => {
+            console.log('Transaction:', amount);
+            // Handle transaction logic here
+          }}
+        />
       </div>
     </div>
   );
