@@ -21,7 +21,6 @@ export function PayPalCheckoutButton({ amount, onSuccess, onError }: PayPalCheck
   useEffect(() => {
     const loadPayPalScript = async () => {
       try {
-        // Get client ID from Supabase using maybeSingle() instead of single()
         const { data, error } = await supabase
           .from('secrets')
           .select('value')
