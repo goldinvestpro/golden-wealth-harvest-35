@@ -21,35 +21,29 @@ export function PayPalCheckoutButton({ amount, onSuccess, onError }: PayPalCheck
   useEffect(() => {
     const loadPayPalScript = async () => {
       try {
-        const { data, error } = await supabase
-          .from('secrets')
-          .select('value')
-          .eq('name', 'PAYPAL_CLIENT_ID')
-          .maybeSingle();
-
-        if (error) {
-          console.error('Error fetching PayPal client ID:', error);
+        // Use environment variable instead of database query for client ID
+        const clientId = import.meta.env.VITE_PAYPAL_CLIENT_ID;
+        
+        if (!clientId) {
+          console.error('PayPal client ID not found in environment variables');
           toast({
             title: "Configuration Error",
-            description: "Unable to load PayPal configuration. Please try again later.",
+            description: "PayPal configuration is missing. Please add VITE_PAYPAL_CLIENT_ID to your environment variables.",
             variant: "destructive"
           });
           return;
         }
 
-        if (!data) {
-          console.error('PayPal client ID not found');
-          toast({
-            title: "Configuration Error",
-            description: "PayPal configuration is missing. Please add the PAYPAL_CLIENT_ID secret.",
-            variant: "destructive"
-          });
-          return;
+        // Remove any existing PayPal script
+        const existingScript = document.getElementById('paypal-script');
+        if (existingScript) {
+          document.body.removeChild(existingScript);
         }
 
         // Load PayPal SDK
         const script = document.createElement('script');
-        script.src = `https://www.paypal.com/sdk/js?client-id=${data.value}&currency=USD`;
+        script.id = 'paypal-script';
+        script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}&currency=USD`;
         script.async = true;
 
         script.onload = () => {
@@ -68,6 +62,7 @@ export function PayPalCheckoutButton({ amount, onSuccess, onError }: PayPalCheck
               onApprove: async (data: any, actions: any) => {
                 try {
                   const order = await actions.order.capture();
+                  console.log('Payment successful:', order);
                   toast({
                     title: "Payment Successful",
                     description: `Order ID: ${order.id}`,
@@ -97,6 +92,7 @@ export function PayPalCheckoutButton({ amount, onSuccess, onError }: PayPalCheck
         };
 
         script.onerror = () => {
+          console.error('Failed to load PayPal script');
           toast({
             title: "PayPal Error",
             description: "Failed to load PayPal. Please try again later.",
@@ -107,7 +103,8 @@ export function PayPalCheckoutButton({ amount, onSuccess, onError }: PayPalCheck
         document.body.appendChild(script);
 
         return () => {
-          if (document.body.contains(script)) {
+          const script = document.getElementById('paypal-script');
+          if (script) {
             document.body.removeChild(script);
           }
         };
