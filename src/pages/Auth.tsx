@@ -32,6 +32,8 @@ const Auth = () => {
           },
         }}
         providers={[]}
+        redirectTo={window.location.origin}
+        onlyThirdPartyProviders={false}
       />
     </div>
   );
