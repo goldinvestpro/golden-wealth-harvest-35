@@ -1,9 +1,19 @@
-import { Link } from "react-router-dom";
-import { Menu } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { Menu, LogIn, LogOut } from "lucide-react";
 import { useState } from "react";
+import { useSession, useSupabaseClient } from '@supabase/auth-helpers-react';
+import { Button } from "./ui/button";
 
 export const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const session = useSession();
+  const supabase = useSupabaseClient();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    navigate('/');
+  };
 
   return (
     <nav className="bg-navy-500 text-white py-4 sticky top-0 z-50">
@@ -26,6 +36,24 @@ export const Navigation = () => {
             <Link to="/shop" className="hover:text-gold-300 transition-colors">Shop</Link>
             <Link to="/wallet" className="hover:text-gold-300 transition-colors">Wallet</Link>
             <Link to="/blog" className="hover:text-gold-300 transition-colors">Blog</Link>
+            {session ? (
+              <Button
+                variant="ghost"
+                className="hover:text-gold-300 transition-colors flex items-center gap-2"
+                onClick={handleLogout}
+              >
+                <LogOut size={20} />
+                <span>Logout</span>
+              </Button>
+            ) : (
+              <Link 
+                to="/auth" 
+                className="hover:text-gold-300 transition-colors flex items-center gap-2"
+              >
+                <LogIn size={20} />
+                <span>Login</span>
+              </Link>
+            )}
           </div>
 
           {/* Mobile menu */}
@@ -33,6 +61,24 @@ export const Navigation = () => {
             <Link to="/shop" className="hover:text-gold-300 transition-colors">Shop</Link>
             <Link to="/wallet" className="hover:text-gold-300 transition-colors">Wallet</Link>
             <Link to="/blog" className="hover:text-gold-300 transition-colors">Blog</Link>
+            {session ? (
+              <Button
+                variant="ghost"
+                className="hover:text-gold-300 transition-colors flex items-center gap-2"
+                onClick={handleLogout}
+              >
+                <LogOut size={20} />
+                <span>Logout</span>
+              </Button>
+            ) : (
+              <Link 
+                to="/auth" 
+                className="hover:text-gold-300 transition-colors flex items-center gap-2"
+              >
+                <LogIn size={20} />
+                <span>Login</span>
+              </Link>
+            )}
           </div>
         </div>
       </div>
