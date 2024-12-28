@@ -11,118 +11,54 @@ export type Database = {
     Tables: {
       profiles: {
         Row: {
-          avatar_url: string | null
-          balance: number | null
-          created_at: string
-          full_name: string | null
-          id: string
-          updated_at: string
-          username: string | null
+          created_at: string | null
+          display_name: string | null
+          id: number
+          updated_at: string | null
+          user_id: string | null
         }
         Insert: {
-          avatar_url?: string | null
-          balance?: number | null
-          created_at?: string
-          full_name?: string | null
-          id: string
-          updated_at?: string
-          username?: string | null
+          created_at?: string | null
+          display_name?: string | null
+          id?: never
+          updated_at?: string | null
+          user_id?: string | null
         }
         Update: {
-          avatar_url?: string | null
-          balance?: number | null
-          created_at?: string
-          full_name?: string | null
-          id?: string
-          updated_at?: string
-          username?: string | null
+          created_at?: string | null
+          display_name?: string | null
+          id?: never
+          updated_at?: string | null
+          user_id?: string | null
         }
         Relationships: []
-      }
-      secrets: {
-        Row: {
-          created_at: string
-          name: string
-          value: string
-        }
-        Insert: {
-          created_at?: string
-          name: string
-          value: string
-        }
-        Update: {
-          created_at?: string
-          name?: string
-          value?: string
-        }
-        Relationships: []
-      }
-      transactions: {
-        Row: {
-          amount: number
-          created_at: string
-          id: string
-          status: string
-          type: string
-          user_id: string
-        }
-        Insert: {
-          amount: number
-          created_at?: string
-          id?: string
-          status: string
-          type: string
-          user_id: string
-        }
-        Update: {
-          amount?: number
-          created_at?: string
-          id?: string
-          status?: string
-          type?: string
-          user_id?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "transactions_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-        ]
       }
       wallets: {
         Row: {
-          balance: number
-          created_at: string
+          balance: number | null
+          created_at: string | null
           id: number
-          updated_at: string
-          user_id: string
+          updated_at: string | null
+          user_id: string | null
+          wallet_type: string | null
         }
         Insert: {
-          balance?: number
-          created_at?: string
+          balance?: number | null
+          created_at?: string | null
           id?: never
-          updated_at?: string
-          user_id: string
+          updated_at?: string | null
+          user_id?: string | null
+          wallet_type?: string | null
         }
         Update: {
-          balance?: number
-          created_at?: string
+          balance?: number | null
+          created_at?: string | null
           id?: never
-          updated_at?: string
-          user_id?: string
+          updated_at?: string | null
+          user_id?: string | null
+          wallet_type?: string | null
         }
-        Relationships: [
-          {
-            foreignKeyName: "fk_user"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-        ]
+        Relationships: []
       }
     }
     Views: {
