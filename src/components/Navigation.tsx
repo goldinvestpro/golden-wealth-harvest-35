@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { UserRound, Menu } from "lucide-react";
+import { Menu } from "lucide-react";
 import { useState } from "react";
 
 export const Navigation = () => {
@@ -26,13 +26,6 @@ export const Navigation = () => {
             <Link to="/shop" className="hover:text-gold-300 transition-colors">Shop</Link>
             <Link to="/wallet" className="hover:text-gold-300 transition-colors">Wallet</Link>
             <Link to="/blog" className="hover:text-gold-300 transition-colors">Blog</Link>
-            <Link 
-              to="/profile" 
-              className="hover:text-gold-300 transition-colors flex items-center gap-2"
-            >
-              <UserRound size={20} />
-              <span>Profile</span>
-            </Link>
           </div>
 
           {/* Mobile menu */}
@@ -40,13 +33,6 @@ export const Navigation = () => {
             <Link to="/shop" className="hover:text-gold-300 transition-colors">Shop</Link>
             <Link to="/wallet" className="hover:text-gold-300 transition-colors">Wallet</Link>
             <Link to="/blog" className="hover:text-gold-300 transition-colors">Blog</Link>
-            <Link 
-              to="/profile" 
-              className="hover:text-gold-300 transition-colors flex items-center gap-2"
-            >
-              <UserRound size={20} />
-              <span>Profile</span>
-            </Link>
           </div>
         </div>
       </div>
