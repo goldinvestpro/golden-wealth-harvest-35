@@ -33,30 +33,6 @@ export type Database = {
         }
         Relationships: []
       }
-      secrets: {
-        Row: {
-          id: number
-          name: string
-          value: string
-          created_at: string
-          updated_at: string
-        }
-        Insert: {
-          id?: never
-          name: string
-          value: string
-          created_at?: string
-          updated_at?: string
-        }
-        Update: {
-          id?: never
-          name?: string
-          value?: string
-          created_at?: string
-          updated_at?: string
-        }
-        Relationships: []
-      }
       wallets: {
         Row: {
           balance: number | null
