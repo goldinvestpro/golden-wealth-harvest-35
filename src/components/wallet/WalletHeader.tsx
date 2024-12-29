@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { TransactionDialog } from "./TransactionDialog";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 interface WalletHeaderProps {
   isDemoAccount: boolean;
@@ -17,7 +18,7 @@ export function WalletHeader({ isDemoAccount, setIsDemoAccount }: WalletHeaderPr
   const [isWithdrawOpen, setIsWithdrawOpen] = useState(false);
   const { toast } = useToast();
 
-  const handleDeposit = (amount: number) => {
+  const handleDeposit = async (amount: number) => {
     if (isDemoAccount) {
       const currentBalance = parseFloat(localStorage.getItem('demoBalance') || '0');
       localStorage.setItem('demoBalance', (currentBalance + amount).toString());
@@ -25,16 +26,69 @@ export function WalletHeader({ isDemoAccount, setIsDemoAccount }: WalletHeaderPr
         title: "Deposit successful",
         description: `$${amount} has been added to your demo account.`,
       });
-      window.location.reload(); // Refresh to update balances
+      window.location.reload();
     } else {
-      toast({
-        title: "Real account deposit",
-        description: "This would integrate with a payment processor in production.",
-      });
+      try {
+        const { data: { user } } = await supabase.auth.getUser();
+        if (!user) {
+          toast({
+            title: "Authentication required",
+            description: "Please sign in to make transactions.",
+            variant: "destructive",
+          });
+          return;
+        }
+
+        const { data: wallet, error: fetchError } = await supabase
+          .from('wallets')
+          .select('balance')
+          .eq('user_id', user.id)
+          .single();
+
+        if (fetchError) {
+          console.error('Error fetching wallet:', fetchError);
+          toast({
+            title: "Error",
+            description: "Could not fetch wallet details.",
+            variant: "destructive",
+          });
+          return;
+        }
+
+        const newBalance = (parseFloat(wallet.balance) || 0) + amount;
+
+        const { error: updateError } = await supabase
+          .from('wallets')
+          .update({ balance: newBalance })
+          .eq('user_id', user.id);
+
+        if (updateError) {
+          console.error('Error updating wallet:', updateError);
+          toast({
+            title: "Error",
+            description: "Failed to update wallet balance.",
+            variant: "destructive",
+          });
+          return;
+        }
+
+        toast({
+          title: "Deposit successful",
+          description: `$${amount} has been added to your account.`,
+        });
+        window.location.reload();
+      } catch (error) {
+        console.error('Transaction error:', error);
+        toast({
+          title: "Transaction failed",
+          description: "An error occurred during the transaction.",
+          variant: "destructive",
+        });
+      }
     }
   };
 
-  const handleWithdraw = (amount: number) => {
+  const handleWithdraw = async (amount: number) => {
     if (isDemoAccount) {
       const currentBalance = parseFloat(localStorage.getItem('demoBalance') || '0');
       if (amount > currentBalance) {
@@ -50,12 +104,73 @@ export function WalletHeader({ isDemoAccount, setIsDemoAccount }: WalletHeaderPr
         title: "Withdrawal successful",
         description: `$${amount} has been withdrawn from your demo account.`,
       });
-      window.location.reload(); // Refresh to update balances
+      window.location.reload();
     } else {
-      toast({
-        title: "Real account withdrawal",
-        description: "This would integrate with a payment processor in production.",
-      });
+      try {
+        const { data: { user } } = await supabase.auth.getUser();
+        if (!user) {
+          toast({
+            title: "Authentication required",
+            description: "Please sign in to make transactions.",
+            variant: "destructive",
+          });
+          return;
+        }
+
+        const { data: wallet, error: fetchError } = await supabase
+          .from('wallets')
+          .select('balance')
+          .eq('user_id', user.id)
+          .single();
+
+        if (fetchError) {
+          console.error('Error fetching wallet:', fetchError);
+          toast({
+            title: "Error",
+            description: "Could not fetch wallet details.",
+            variant: "destructive",
+          });
+          return;
+        }
+
+        const currentBalance = parseFloat(wallet.balance) || 0;
+        if (amount > currentBalance) {
+          toast({
+            title: "Insufficient funds",
+            description: "You don't have enough balance for this withdrawal.",
+            variant: "destructive",
+          });
+          return;
+        }
+
+        const { error: updateError } = await supabase
+          .from('wallets')
+          .update({ balance: currentBalance - amount })
+          .eq('user_id', user.id);
+
+        if (updateError) {
+          console.error('Error updating wallet:', updateError);
+          toast({
+            title: "Error",
+            description: "Failed to update wallet balance.",
+            variant: "destructive",
+          });
+          return;
+        }
+
+        toast({
+          title: "Withdrawal successful",
+          description: `$${amount} has been withdrawn from your account.`,
+        });
+        window.location.reload();
+      } catch (error) {
+        console.error('Transaction error:', error);
+        toast({
+          title: "Transaction failed",
+          description: "An error occurred during the transaction.",
+          variant: "destructive",
+        });
+      }
     }
   };
 
