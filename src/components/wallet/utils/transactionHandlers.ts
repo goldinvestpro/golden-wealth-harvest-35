@@ -21,7 +21,7 @@ export const handleDemoTransaction = (
     ? currentBalance + amount 
     : currentBalance - amount;
   
-  localStorage.setItem('demoBalance', newBalance.toString()); // Explicitly convert to string
+  localStorage.setItem('demoBalance', newBalance.toString());
   
   toast({
     title: `${type === 'deposit' ? 'Deposit' : 'Withdrawal'} successful`,
@@ -63,7 +63,8 @@ export const handleRealTransaction = async (
       return;
     }
 
-    const currentBalance = parseFloat(wallet.balance || '0');
+    // Ensure we're working with numbers by explicitly parsing the balance
+    const currentBalance = Number(wallet?.balance || 0);
     
     if (type === 'withdraw' && amount > currentBalance) {
       toast({
@@ -80,7 +81,7 @@ export const handleRealTransaction = async (
 
     const { error: updateError } = await supabase
       .from('wallets')
-      .update({ balance: newBalance.toString() }) // Explicitly convert to string
+      .update({ balance: newBalance })
       .eq('user_id', user.id);
 
     if (updateError) {
