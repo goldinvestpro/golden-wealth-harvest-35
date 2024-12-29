@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
+import axios from "axios";
+import { useToast } from "@/components/ui/use-toast";
 
 interface RevenueChartProps {
   isDemoAccount?: boolean;
@@ -14,39 +16,86 @@ interface GoldPriceDataPoint {
 export function RevenueChart({ isDemoAccount = false }: RevenueChartProps) {
   const [priceHistory, setPriceHistory] = useState<GoldPriceDataPoint[]>([]);
   const [currentPrice, setCurrentPrice] = useState(1925.50);
+  const { toast } = useToast();
 
   // Initialize with demo or real data based on account type
   useEffect(() => {
-    const basePrice = isDemoAccount ? 500.25 : 1925.50;
-    const initialHistory = Array.from({ length: 24 }, (_, i) => {
-      const date = new Date();
-      date.setHours(date.getHours() - (23 - i));
-      return {
-        timestamp: date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-        price: basePrice + (Math.random() - 0.5) * (isDemoAccount ? 5 : 10)
-      };
-    });
-    setPriceHistory(initialHistory);
-    setCurrentPrice(basePrice);
+    if (isDemoAccount) {
+      // Use demo data for demo accounts
+      const basePrice = 500.25;
+      const initialHistory = Array.from({ length: 24 }, (_, i) => {
+        const date = new Date();
+        date.setHours(date.getHours() - (23 - i));
+        return {
+          timestamp: date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+          price: basePrice + (Math.random() - 0.5) * 5
+        };
+      });
+      setPriceHistory(initialHistory);
+      setCurrentPrice(basePrice);
+    } else {
+      // Fetch real gold price for real accounts
+      fetchGoldPrice();
+    }
   }, [isDemoAccount]);
 
-  // Update price and add to history
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const variation = isDemoAccount ? 1 : 2;
-      const newPrice = currentPrice + (Math.random() - 0.5) * variation;
-      setCurrentPrice(Number(newPrice.toFixed(2)));
+  const fetchGoldPrice = async () => {
+    try {
+      const config = {
+        method: 'get',
+        maxBodyLength: Infinity,
+        url: 'https://gold.g.apised.com/v1/latest?metals=XAU&base_currency=USD&currencies=USD&weight_unit=kg',
+        headers: { 
+          'x-api-key': 'sk_cB23D42EebfbB25d6CeA1b750aAF5fCEA65fEB9A00e2Ebd8'
+        }
+      };
+
+      const response = await axios.request(config);
+      const goldPrice = response.data.rates.XAU.USD;
       
+      setCurrentPrice(goldPrice);
+      
+      // Update price history with the new price
       setPriceHistory(prev => {
         const newHistory = [...prev.slice(1), {
           timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-          price: newPrice
+          price: goldPrice
         }];
         return newHistory;
       });
-    }, 5000);
+    } catch (error) {
+      console.error('Error fetching gold price:', error);
+      toast({
+        title: "Error fetching gold price",
+        description: "Could not fetch the latest gold price. Using fallback data.",
+        variant: "destructive",
+      });
+    }
+  };
 
-    return () => clearInterval(interval);
+  // Update price periodically
+  useEffect(() => {
+    if (isDemoAccount) {
+      const interval = setInterval(() => {
+        const variation = 1;
+        const newPrice = currentPrice + (Math.random() - 0.5) * variation;
+        setCurrentPrice(Number(newPrice.toFixed(2)));
+        
+        setPriceHistory(prev => {
+          const newHistory = [...prev.slice(1), {
+            timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+            price: newPrice
+          }];
+          return newHistory;
+        });
+      }, 5000);
+
+      return () => clearInterval(interval);
+    } else {
+      // For real accounts, fetch new price every 5 seconds
+      const interval = setInterval(fetchGoldPrice, 5000);
+      return () => clearInterval(interval);
+    }
   }, [currentPrice, isDemoAccount]);
 
   return (
