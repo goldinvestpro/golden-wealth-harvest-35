@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
 import axios from "axios";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
 
 interface RevenueChartProps {
   isDemoAccount?: boolean;
@@ -51,18 +51,25 @@ export function RevenueChart({ isDemoAccount = false }: RevenueChartProps) {
       };
 
       const response = await axios.request(config);
-      const goldPrice = response.data.rates.XAU.USD;
+      console.log('Gold API Response:', response.data); // Debug log
       
-      setCurrentPrice(goldPrice);
-      
-      // Update price history with the new price
-      setPriceHistory(prev => {
-        const newHistory = [...prev.slice(1), {
-          timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-          price: goldPrice
-        }];
-        return newHistory;
-      });
+      if (response.data && response.data.rates && response.data.rates.XAU) {
+        const goldPrice = response.data.rates.XAU.USD;
+        console.log('Extracted Gold Price:', goldPrice); // Debug log
+        
+        setCurrentPrice(goldPrice);
+        
+        // Update price history with the new price
+        setPriceHistory(prev => {
+          const newHistory = [...prev.slice(1), {
+            timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+            price: goldPrice
+          }];
+          return newHistory;
+        });
+      } else {
+        throw new Error('Invalid API response structure');
+      }
     } catch (error) {
       console.error('Error fetching gold price:', error);
       toast({
