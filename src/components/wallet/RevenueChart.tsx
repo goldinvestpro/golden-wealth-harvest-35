@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
-import axios from "axios";
 import { useToast } from "@/hooks/use-toast";
+import { fetchGoldPrice } from "@/services/goldPrice";
+import { GoldPriceDisplay } from "./GoldPriceDisplay";
+import { GoldPriceChart } from "./GoldPriceChart";
 
 interface RevenueChartProps {
   isDemoAccount?: boolean;
 }
 
-interface GoldPriceDataPoint {
+export interface GoldPriceDataPoint {
   timestamp: string;
   price: number;
 }
@@ -35,41 +36,26 @@ export function RevenueChart({ isDemoAccount = false }: RevenueChartProps) {
       setCurrentPrice(basePrice);
     } else {
       // Fetch real gold price for real accounts
-      fetchGoldPrice();
+      fetchLatestGoldPrice();
     }
   }, [isDemoAccount]);
 
-  const fetchGoldPrice = async () => {
+  const fetchLatestGoldPrice = async () => {
     try {
-      const config = {
-        method: 'get',
-        maxBodyLength: Infinity,
-        url: 'https://gold.g.apised.com/v1/latest?metals=XAU&base_currency=USD&currencies=USD&weight_unit=kg',
-        headers: { 
-          'x-api-key': 'sk_cB23D42EebfbB25d6CeA1b750aAF5fCEA65fEB9A00e2Ebd8'
-        }
-      };
-
-      const response = await axios.request(config);
-      console.log('Gold API Response:', response.data); // Debug log
+      const response = await fetchGoldPrice();
+      const goldPrice = response.rates.XAU.USD;
+      console.log('Extracted Gold Price:', goldPrice);
       
-      if (response.data && response.data.rates && response.data.rates.XAU) {
-        const goldPrice = response.data.rates.XAU.USD;
-        console.log('Extracted Gold Price:', goldPrice); // Debug log
-        
-        setCurrentPrice(goldPrice);
-        
-        // Update price history with the new price
-        setPriceHistory(prev => {
-          const newHistory = [...prev.slice(1), {
-            timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-            price: goldPrice
-          }];
-          return newHistory;
-        });
-      } else {
-        throw new Error('Invalid API response structure');
-      }
+      setCurrentPrice(goldPrice);
+      
+      // Update price history with the new price
+      setPriceHistory(prev => {
+        const newHistory = [...prev.slice(1), {
+          timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+          price: goldPrice
+        }];
+        return newHistory;
+      });
     } catch (error) {
       console.error('Error fetching gold price:', error);
       toast({
@@ -100,7 +86,7 @@ export function RevenueChart({ isDemoAccount = false }: RevenueChartProps) {
       return () => clearInterval(interval);
     } else {
       // For real accounts, fetch new price every 5 seconds
-      const interval = setInterval(fetchGoldPrice, 5000);
+      const interval = setInterval(fetchLatestGoldPrice, 5000);
       return () => clearInterval(interval);
     }
   }, [currentPrice, isDemoAccount]);
@@ -108,53 +94,8 @@ export function RevenueChart({ isDemoAccount = false }: RevenueChartProps) {
   return (
     <Card className="bg-navy-500 border-white/10">
       <CardContent className="p-4 sm:p-6">
-        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-8">
-          <div>
-            <p className="text-sm text-gray-400">Gold Price Chart (24h)</p>
-            <h2 className="text-2xl sm:text-3xl font-bold">${currentPrice.toFixed(2)}</h2>
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="w-3 h-3 rounded-full bg-yellow-500" />
-            <span className="text-sm">Gold Price (USD/oz)</span>
-          </div>
-        </div>
-        <div className="h-[300px]">
-          <ResponsiveContainer width="100%" height="100%">
-            <AreaChart data={priceHistory}>
-              <defs>
-                <linearGradient id="colorGold" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#EAB308" stopOpacity={0.3}/>
-                  <stop offset="95%" stopColor="#EAB308" stopOpacity={0}/>
-                </linearGradient>
-              </defs>
-              <XAxis 
-                dataKey="timestamp" 
-                stroke="#ffffff20"
-                tick={{ fill: '#94A3B8' }}
-              />
-              <YAxis 
-                stroke="#ffffff20"
-                tick={{ fill: '#94A3B8' }}
-                domain={['auto', 'auto']}
-              />
-              <Tooltip 
-                contentStyle={{ 
-                  backgroundColor: '#1E293B',
-                  border: 'none',
-                  borderRadius: '8px',
-                  color: '#fff'
-                }}
-              />
-              <Area
-                type="monotone"
-                dataKey="price"
-                stroke="#EAB308"
-                fillOpacity={1}
-                fill="url(#colorGold)"
-              />
-            </AreaChart>
-          </ResponsiveContainer>
-        </div>
+        <GoldPriceDisplay currentPrice={currentPrice} />
+        <GoldPriceChart priceHistory={priceHistory} />
       </CardContent>
     </Card>
   );
